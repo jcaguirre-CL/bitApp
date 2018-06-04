@@ -1,0 +1,145 @@
+<form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
+  
+    <!-- Hero Detail Controls -->
+    <!-- <div class="form-group">
+        <label class="center-block">Informe:
+          <input class="form-control" formControlName="informeId">
+        </label>
+    </div> -->
+  
+    <!-- <div formArrayName="secretLairs" class="well well-lg"> -->
+      {{informe.value}}
+      {{responsable}}
+    <div formArrayName="listadoEventos" class="well well-lg">
+      <div *ngFor="let evento of listadoEventos.controls; let i=index" [formGroupName]="i" >
+        <!-- The repeated address template -->
+        <h4>Evento: {{i + 1}}</h4>
+        <div style="margin-left: 1em;">
+          <div class="form-group">
+              <label class="center-block">Hora:
+                <input class="form-control" formControlName="hora">
+              </label>
+          </div>
+          <div class="form-group">
+            <label class="center-block">Area:
+              <select class="form-control" formControlName="area">
+                <option *ngFor="let area of areas" [value]="area">{{area}}</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="center-block">Quien informa:
+              <input class="form-control" formControlName="informante">
+            </label>
+          </div>
+          <!-- <div class="form-group">
+            <label class="center-block">Fecha:
+              <input class="form-control" formControlName="fecha">
+            </label>
+          </div> -->
+          <div class="form-group">
+            <label class="center-block">Estado:
+              <select class="form-control" formControlName="estado">
+                <option *ngFor="let estado of estados" [value]="estado">{{estado}}</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="center-block">Descripcion:
+              <input class="form-control" formControlName="descripcion">
+            </label>
+          </div>
+          <div class="form-group">
+              <label class="center-block">Solucion:
+                <input class="form-control" formControlName="solucion">
+              </label>
+          </div>
+        </div>
+        <br>
+        <!-- End of the repeated address template -->
+      </div>
+      <button (click)="agregarEvento()" type="button">Agregar evento</button>
+    </div>
+    <div style="margin-bottom: 1em">
+        <button type="submit"
+                class="btn btn-success">Generar Informe</button> &nbsp;
+        <!-- <button type="button" (click)="revert()"
+                class="btn btn-danger">Reiniciar Informe</button> -->
+    </div>
+    <!-- <div class="form-group radio">
+      <h4>Super power:</h4>
+      <label class="center-block"><input type="radio" formControlName="power" value="flight">Flight</label>
+      <label class="center-block"><input type="radio" formControlName="power" value="x-ray vision">X-ray vision</label>
+      <label class="center-block"><input type="radio" formControlName="power" value="strength">Strength</label>
+    </div> -->
+    <!-- <div class="checkbox">
+      <label class="center-block">
+        <input type="checkbox" formControlName="sidekick">I have a sidekick.
+      </label>
+    </div> -->
+  </form>
+  
+  <!-- <p>heroForm value: {{ heroForm.value | json}}</p>
+  
+  <h4>Name change log</h4>
+  <div *ngFor="let name of nameChangeLog">{{name}}</div>
+   -->
+  
+  <!-- 
+  Copyright 2017-2018 Google Inc. All Rights Reserved.
+  Use of this source code is governed by an MIT-style license that
+  can be found in the LICENSE file at http://angular.io/license
+  -->
+
+
+<!-- <h4>Evento: #{{i + 1}}</h4>
+<div style="margin-left: 1em;">
+  <div class="form-group">
+    <label class="center-block">Area:
+      <select class="form-control" formControlName="descripcion">
+        <option *ngFor="let area of areas" [value]="area">{{area}}</option>
+      </select>
+    </label>
+  </div>
+  <div class="form-group">
+    <label class="center-block">Descripcion:
+      <input class="form-control" formControlName="descripcion">
+    </label>
+  </div>
+  <div class="form-group">
+    <label class="center-block">Hora:
+      <input class="form-control" formControlName="hora">
+    </label>
+  </div>
+  <div class="form-group radio">
+    <h4>Severidad:</h4>
+    <label class="center-block"><input type="radio" formControlName="power" value="alta">Alta</label>
+    <label class="center-block"><input type="radio" formControlName="power" value="media">Media</label>
+    <label class="center-block"><input type="radio" formControlName="power" value="baja">Baja</label>
+  </div>
+  <div class="checkbox">
+    <label class="center-block">
+      <input type="checkbox" formControlName="estado">Resuelto
+    </label>
+  </div>
+</div>
+<br> -->
+
+<!-- <mat-card class="card-central">
+  <form [formGroup]="informeForm" (ngSubmit)="onSubmit()">
+    <div style="margin-bottom: 1em">
+      <button type="submit" [disabled]="informeForm.pristine" class="btn btn-success">Guardar</button> &nbsp;
+      <button type="button" (click)="revert()" [disabled]="informeForm.pristine" class="btn btn-danger">Borrar</button>
+    </div>
+    <div class="form-group">
+        <label class="center-block">Responsable:
+          <input class="form-control" formControlName="responsable">
+        </label>
+    </div>
+  
+    <div formArrayName="listaEventos" class="well well-lg">
+      <app-evento *ngFor="let evento of listaEventos.controls; let i=index" [formGroupName]="i" [app-evento]="evento"></app-evento>
+      <button (click)="addEvento()" type="button">Agregar evento</button>
+    </div>
+  </form>
+</mat-card> -->

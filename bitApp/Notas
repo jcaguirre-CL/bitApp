@@ -1,0 +1,16 @@
+Creacion de informes
+
+- Debo verificar si el formulario de informe pasa argumentos al formulario de eventos
+- Debo asociar parametros de informe (responsable, fecha) a cada evento creado
+- Si se confirma la creacion de los eventos se crea un informe con el campo 'listado de eventos' asociados, es decir, 
+    un informe guarda un arreglo de ids de eventos (EventoID)
+- Al presionar el boton Generar informe, se escribe en la base un registro en collection 'informes' con un arreglo de los ids generados
+    y se escriben todos los eventos de forma individual en collection 'eventos' con la relacion de datos hacia el informe donde fueron creados.
+
+
+Modelamiento de datos
+
+- Se guardaran los eventos de forma individual, tanto al crear informes como crear incidencias.
+- Una incidencia es un evento en si
+- Los informes solo guardaran un listado de los ids de los eventos creados durante la generacion del informe. Esto dato es lo que
+    se escribira en la base

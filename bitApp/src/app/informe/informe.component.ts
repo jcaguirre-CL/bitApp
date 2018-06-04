@@ -23,7 +23,7 @@ export class InformeComponent implements OnInit {
 
   constructor(private apiService: ApiService, private fb: FormBuilder) {
     this.createForm();
-    this.informe = {listadoEventos: [], responsable: 'Responsable 1 manual', fecha: '', turno: '', informeId: 1};
+    // this.informe = {listadoEventos: [], responsable: 'Responsable 1 manual', fecha: '', turno: '', informeId: 1};
   }
 
   createForm() {

@@ -1,10 +1,8 @@
 <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
-  <mat-card-actions align="center">
-    <button mat-raised-button color="primary" (click)="agregarEvento()" type="button">Agregar evento</button>
-  </mat-card-actions>
   <div formArrayName="listadoEventos" class="well well-lg">
     <div *ngFor="let evento of listadoEventos.controls; let i=index" [formGroupName]="i" >
-      <h4>Evento: {{i + 1}}</h4>
+      <mat-divider></mat-divider>
+      <h3>EVENTO #{{i + 1}}</h3>
       <div style="margin-left: 1em;">
         <mat-list class="app-class">
           <mat-list-item>
@@ -442,6 +440,9 @@
     </div>
   </div>
   <mat-divider></mat-divider>
+  <mat-card-actions align="left">
+    <button mat-raised-button color="primary" (click)="agregarEvento()" type="button">Agregar evento</button>
+  </mat-card-actions>
   <mat-card-actions align="right">
     <button mat-raised-button color="primary" type="submit">Generar Informe</button>
   </mat-card-actions>

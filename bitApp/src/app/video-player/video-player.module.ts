@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { NgMaterialModule } from '../ng-material/ng-material.module';
+// import { NgMaterialModule } from '../ng-material/ng-material.module';
+import { MaterialModule } from '../material/material.module';
+
 import { reducers } from './store/reducers';
 import { StreamEffects } from './store/effects/stream.effects';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
@@ -18,7 +20,7 @@ import { PlayVideo } from './components/video-player-controls/play-video.compone
 @NgModule({
   imports: [
     CommonModule,
-    NgMaterialModule,
+    MaterialModule,
     StoreModule.forFeature('videoPlayer', reducers),
     EffectsModule.forFeature([StreamEffects])
   ],

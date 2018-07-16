@@ -13,6 +13,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { trigger, state, style, animate, transition, group } from '@angular/animations';
 import { routerTransition } from './router.animations';
+import { HttpErrorHandler } from './http-error-handler.service';
+import { MessageService } from './message.service';
 
 import { AppComponent } from './app.component';
 import { ApiService } from './api.service';
@@ -22,6 +24,8 @@ import { EventoComponent } from './evento/evento.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { IncidenciaComponent } from './incidencia/incidencia.component';
 import { InicioComponent } from './inicio/inicio.component';
+
+import { MatRadioGroup } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,7 @@ import { InicioComponent } from './inicio/inicio.component';
     FlexLayoutModule,
     MatSnackBarModule
   ],
-  providers: [ApiService],
+  providers: [ApiService, HttpErrorHandler, MessageService, MatRadioGroup],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

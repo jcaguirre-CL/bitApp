@@ -1,0 +1,9 @@
+.center{
+    width: 75%;
+    margin: 10px auto;
+    justify-content: left;
+  }
+
+  .izquierda{
+    text-align: left;
+  }

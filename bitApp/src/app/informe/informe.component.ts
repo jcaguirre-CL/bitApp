@@ -1,7 +1,8 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
 
-import { Informe, Evento, Responsable, estados } from '../data-model';
+import { InformeShort, InformeLarge, Evento, Responsable, estados , turnos, responsables} from '../data-model';
 import { ApiService } from '../api.service';
 
 import { Observable } from 'rxjs';
@@ -14,31 +15,41 @@ import { DataSource } from '@angular/cdk/collections';
   styleUrls: ['./informe.component.css']
 })
 export class InformeComponent implements OnInit {
-  informes: Observable<Informe[]>;
-  displayedColumns = ['informeId', 'responsable'];
+  informes: Observable<InformeLarge[]>;
+  displayedColumns = ['informeId', 'fecha', 'turno', 'responsable'];
   dataSource = new RegistroDataSource(this.apiService);
   isLoading = false;
-  informe: Informe;
+  turnos =  turnos;
+  responsables = responsables;
+  informe:  InformeLarge;
   informeForm: FormGroup;
+  responsableCtrl: FormControl;
+  informeShort: InformeShort = {};
+  listadeEventos: Evento[];
+
+  // filteredResponsables: Observable<any[]>;
 
   constructor(private apiService: ApiService, private fb: FormBuilder) {
-    this.createForm();
-    // this.informe = {listadoEventos: [], responsable: 'Responsable 1 manual', fecha: '', turno: '', informeId: 1};
+    // this.responsableCtrl = new FormControl();
+    // this.filteredResponsables = this.responsableCtrl.valueChanges
+    //   .pipe(
+    //     startWith(''),
+    //     map(responsable => responsable ? this.filtrarResponsables(responsable) : this.responsables.slice())
+    //   );
   }
+
+  // filtrarResponsables(nombre: string) {
+  //   return this.responsables.filter(responsable =>
+  //     responsable.nombre.toLowerCase().indexOf(nombre.toLowerCase()) === 0);
+  // }
 
   createForm() {
     this.informeForm = this.fb.group({
       fecha: '',
       turno: '',
-      responsable: ''
+      responsable: '',
+      informeId: ''
     });
-  }
-
-  ngOnInit() { this.getInformes(); }
-
-  // tslint:disable-next-line:use-life-cycle-interface
-  ngOnChanges() {
-    this.informe = this.informeForm.value;
   }
 
   getInformes() {
@@ -46,16 +57,51 @@ export class InformeComponent implements OnInit {
     this.informes = this.apiService.getInformes()
                         .pipe(finalize(() => this.isLoading = false));
   }
-  detalleInforme(informe: Informe) {
+
+  prepararInforme(): InformeLarge {
+    const formModel = this.informeForm.value;
+    const saveInforme: InformeLarge = {
+      listadoEventos: formModel as Evento[],
+      fecha: formModel.fecha as string,
+      turno: formModel.turno as string,
+      responsable: formModel.responsable as string,
+      informeId: formModel.informeId as string,
+    };
+    return saveInforme;
+  }
+
+  detalleInforme(informe: InformeLarge) {
     // console.log(informe);
   }
+
+  filaSeleccionada(row) {
+    this.informeShort = row;
+    this.apiService.getEventos(this.informeShort['listadoEventos'])
+    .subscribe(val => {
+      console.log('arreglo de eventos' + val);
+    });
+    console.log('Row clicked: ', this.informeShort);
+  }
+
+  ngOnInit() {
+    this.getInformes();
+    this.createForm();
+    this.onChanges();
+  }
+
+  onChanges(): void {
+    this.informeForm.valueChanges.subscribe(val => {
+    this.informe = this.prepararInforme();
+    });
+  }
+
 }
 
 export class RegistroDataSource extends DataSource<any> {
   constructor(private apiService: ApiService) {
     super();
   }
-  connect(): Observable<Informe[]> {
+  connect(): Observable<InformeLarge[]> {
     return this.apiService.getInformes();
   }
   disconnect() { }

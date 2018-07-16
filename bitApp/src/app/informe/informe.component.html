@@ -1,26 +1,108 @@
-<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+<div class="container" fxLayout="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
   <div fxFlex="50%">
-    <mat-card class="card-central">
-      <form [formGroup]="informeForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label class="center-block">Fecha Informe:
-              <input class="form-control" formControlName="fecha">
-            </label>
-        </div>
-        {{fecha}}
-        <div class="form-group">
-            <label class="center-block">Turno:
-              <input class="form-control" formControlName="turno">
-            </label>
-        </div>
-        <div class="form-group">
-            <label class="center-block">Responsable:
-              <input class="form-control" formControlName="responsable">
-            </label>
-        </div>
-      </form>  
-      <app-evento [(informe)]="informe"></app-evento>
-    </mat-card>
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+      <div fxFlex="50%">
+        <mat-card class="card-central">
+          <mat-card-header>
+            <mat-list>
+              <mat-list-item>
+                <mat-card-title>
+                  <h2>Creacion de Informe</h2>
+                </mat-card-title>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <form [formGroup]="informeForm" (ngSubmit)="onSubmit()">
+            <mat-list>
+              <mat-list-item>
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker" placeholder="Seleccione una fecha" formControlName="fecha">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>              
+              </mat-list-item>
+              <mat-list-item>
+                <mat-form-field>
+                  <mat-select placeholder="Turno" formControlName="turno">
+                    <mat-option *ngFor="let turno of turnos" [value]="turno.value">
+                      {{ turno.viewValue }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>              
+              </mat-list-item>
+              <mat-list-item>
+                <mat-form-field>
+                    <mat-select placeholder="Responsable" formControlName="responsable">
+                      <mat-option *ngFor="let responsable of responsables" [value]="responsable.nombre">
+                        {{ responsable.nombre }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>             
+              </mat-list-item>
+             <!-- NO LOGRE HACER FUNCIONAR QUE AUTOCOMPLETE PASE ARGUMENTO ONCHANGE()-->
+              <!-- <mat-list-item>
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Responsable" aria-label="Responsable" [matAutocomplete]="auto" [formControl]="responsableCtrl" formControlName="responsableValor">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let responsable of filteredResponsables | async" [value]="responsable.nombre">
+                      <span>{{ responsable.nombre }}</span> |
+                      <small>Correo: {{ responsable.correo }}</small>
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>              
+              </mat-list-item> -->
+            </mat-list>
+          </form>  
+          <app-evento [(informe)]="informe"></app-evento>
+        </mat-card>
+      </div>
+      <div fxFlex="50%">
+        <mat-card class="card-central">
+          <mat-card-header>
+            <mat-list>
+              <mat-list-item>
+                <mat-card-title>
+                  <h2>Detalle de Informe</h2>
+                </mat-card-title>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+            <mat-card-header>
+              <mat-list>
+                <mat-list-item>
+                  <mat-card-title>Fecha: {{ informeShort.fecha }}</mat-card-title>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-card-title>Turno: {{ informeShort.turno }}</mat-card-title>
+                </mat-list-item>
+                <mat-list-item>
+                  <mat-card-title>Responsable: {{ informeShort.responsable }}</mat-card-title>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-header>
+            <mat-card-content class="center">
+              <mat-list>
+                <mat-list-item *ngFor="let evento of informeShort.listadoEventos">
+                  <h3 matLine> {{evento._id}} </h3>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <p class="izquierda">
+                      Descripcion evento 2  
+                  </p>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+              </mat-list>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button>EDITAR</button>
+                <button mat-button>ELIMINAR</button>
+            </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
   </div>
   <div fxFlex="50%">
     <mat-card class="card-central">
@@ -30,12 +112,20 @@
             <mat-header-cell *matHeaderCellDef> ID Informe </mat-header-cell>
             <mat-cell *matCellDef="let informe"> {{informe.informeId}} </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+            <mat-cell *matCellDef="let informe"> {{informe.fecha}} </mat-cell>
+        </ng-container>        
+        <ng-container matColumnDef="turno">
+            <mat-header-cell *matHeaderCellDef> Turno </mat-header-cell>
+            <mat-cell *matCellDef="let informe"> {{informe.turno}} </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="responsable">
             <mat-header-cell *matHeaderCellDef> Responsable</mat-header-cell>
             <mat-cell *matCellDef="let informe"> {{informe.responsable}} </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="filaSeleccionada(row)"></mat-row>
       </mat-table>
     </mat-card>
   </div>

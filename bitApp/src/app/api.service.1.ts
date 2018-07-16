@@ -70,29 +70,6 @@ export class ApiService {
       );
   }
 
-  getInformes(): Observable<any> {
-    return this.http.get(this._URL + 'Informes', httpOptions)
-      .pipe(
-        catchError(this.handleError('getInformes', []))
-      );
-  }
-  getEvento(eventoId): Observable<any> {
-    return this.http.get(this._URL + 'Evento/' + eventoId, httpOptions)
-      .pipe(
-        catchError(this.handleError('getEvento x Informe', []))
-      );
-  }
-  getEventos(listadeEventos): Observable<any> {
-    return this.http.get(this._URL + 'Eventos/' + listadeEventos, httpOptions)
-      .pipe(
-        catchError(this.handleError('getEventos x Informe', []))
-      );
-  }
-  // getInformes(): Observable<InformeLarge[]> {
-  //   return of(informesLarge).pipe(delay(this.delayMs)); // simulate latency with delay
-  // }
-
-
   obtenerLastEventoId () {
     return this.http.get(this._URL + 'Eventos/Last', httpOptions)
       .pipe(
@@ -100,44 +77,44 @@ export class ApiService {
       );
   }
 
-  // crearInforme (informeLarge: InformeLarge): Observable<InformeLarge> {
-  //   this.informeLarge = informeLarge;
-  //   console.log('crear Informe: ' + JSON.stringify(this.informeLarge));
-  //   this.eventos = informeLarge['listadoEventos'];
+  crearInforme (informeLarge: InformeLarge): Observable<InformeLarge> {
+    this.informeLarge = informeLarge;
+    console.log('crear Informe: ' + JSON.stringify(this.informeLarge));
+    this.eventos = informeLarge['listadoEventos'];
 
-  //   for (let i = 0, len = this.eventos.length; i < len; i++) {
-  //     this.buildEvento(this.eventos[i])
-  //     .subscribe(evento => {
-  //       console.log('creando: ' + JSON.stringify(evento));
-  //       this.arrayEventos.push(evento['_id']);
-  //       console.log('arrayeventos: ' + this.arrayEventos);
-  //     });
-  //   }
+    for (let i = 0, len = this.eventos.length; i < len; i++) {
+      this.buildEvento(this.eventos[i])
+      .subscribe(evento => {
+        console.log('creando: ' + JSON.stringify(evento));
+        this.arrayEventos.push(evento['_id']);
+        console.log('arrayeventos: ' + this.arrayEventos);
+      });
+    }
 
-  //   setTimeout(() => {
-  //     console.log('sdsd: ' + this.arrayEventos);
-  //     console.log('sdsd: ' + JSON.stringify(this.informeShort));
-  //     for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
-  //       this.informeShort['listadoEventos'].push({_id: this.arrayEventos[i]});
-  //     }
-  //     this.informeShort['fecha'] = this.informeLarge['fecha'];
-  //     this.informeShort['responsable'] = this.informeLarge['responsable'];
-  //     this.informeShort['turno'] = this.informeLarge['turno'];
-  //     // setTimeout(() => {
-  //       this.buildInforme(this.informeShort).
-  //       subscribe(informe => {
-  //         console.log('!!!!!crear informe: ' + JSON.stringify(informe));
-  //         console.log('!!!!!crear informe: ' + informe['_id']);
-  //         for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
-  //           this.modifyEvento({'eventoId': String(this.arrayEventos[i]), 'informeId': String(informe['_id'])})
-  //           .subscribe(evento => {
-  //             console.log('Evento modificado: ' + JSON.stringify(evento));
-  //           });
-  //         }
-  //       });
-  //   }, 1000);
-  //   return null;
-  // }
+    setTimeout(() => {
+      console.log('sdsd: ' + this.arrayEventos);
+      console.log('sdsd: ' + JSON.stringify(this.informeShort));
+      for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
+        this.informeShort['listadoEventos'].push({_id: this.arrayEventos[i]});
+      }
+      this.informeShort['fecha'] = this.informeLarge['fecha'];
+      this.informeShort['responsable'] = this.informeLarge['responsable'];
+      this.informeShort['turno'] = this.informeLarge['turno'];
+      // setTimeout(() => {
+        this.buildInforme(this.informeShort).
+        subscribe(informe => {
+          console.log('!!!!!crear informe: ' + JSON.stringify(informe));
+          console.log('!!!!!crear informe: ' + informe['_id']);
+          for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
+            this.modifyEvento({'eventoId': String(this.arrayEventos[i]), 'informeId': String(informe['_id'])})
+            .subscribe(evento => {
+              console.log('Evento modificado: ' + JSON.stringify(evento));
+            });
+          }
+        });
+    }, 1000);
+    return null;
+  }
 
 
 
@@ -145,6 +122,8 @@ export class ApiService {
   console.log('obtenerLastInformeId(): ');
   return forkJoin(this.http.get(this._URL + 'Informes/LastId'));
  }
+
+
   // getDomos(): Observable<IDomos[]> {
   //   return this.http
   //       .get(this._URL + '/All')
@@ -153,6 +132,11 @@ export class ApiService {
   //       })
   //       .catch(this.handleError);
   // }
+
+
+  getInformes(): Observable<InformeLarge[]> {
+    return of(informesLarge).pipe(delay(this.delayMs)); // simulate latency with delay
+  }
 
   // updateInforme(informe: Informe): Observable<Informe>  {
   //   const oldHero = informes.find(i => i.informeId === informe.informeId);

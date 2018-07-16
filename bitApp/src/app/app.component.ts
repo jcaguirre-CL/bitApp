@@ -20,7 +20,7 @@ import { AuthService } from './auth.service';
 export class AppComponent {
   title = 'app';
   mode = new FormControl('over');
-  // shouldRun = [/(^|\.)misitio\.co$/, /(^|\.)servidor\.io$/].some(h => h.test(window.location.host));
+
   constructor(private auth: AuthService, private router: Router) { }
   logout() {
     this.auth.logout();

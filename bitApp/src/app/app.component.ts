@@ -10,6 +10,8 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
+import { AuthService } from './auth.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,5 +21,9 @@ export class AppComponent {
   title = 'app';
   mode = new FormControl('over');
   // shouldRun = [/(^|\.)misitio\.co$/, /(^|\.)servidor\.io$/].some(h => h.test(window.location.host));
-  constructor(public router: Router) { }
+  constructor(private auth: AuthService, private router: Router) { }
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['login']);
+  }
 }

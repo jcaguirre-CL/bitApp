@@ -7,21 +7,25 @@
 </mat-toolbar>
 <mat-sidenav-container class="example-container" autosize="true">
   <!-- <mat-sidenav #sidenav [mode]="mode.value"> -->
-  <mat-sidenav #sidenav mode="over" opened="true" class="example-sidenav"
+  <mat-sidenav #sidenav mode="over" opened="false" class="example-sidenav"
               [fixedInViewport]="false" [fixedTopGap]="0" [fixedBottomGap]="0"
               position="start">
     <mat-toolbar color="primary">
       <mat-toolbar-row>
         <mat-icon class="example-icon">assignment</mat-icon>
-        <button mat-button routerLinkActive="active" routerLink="/informe" (click)="sidenav.toggle()">Gestion de Informes</button>
+        <button mat-button routerLinkActive="active" routerLink="/informe" routerLinkActive="active" *ngIf="auth.loggedIn" (click)="sidenav.toggle()">Gestion de Informes</button>
       </mat-toolbar-row>
       <mat-toolbar-row>
         <mat-icon class="example-icon">info</mat-icon>
-        <button mat-button routerLinkActive="active" routerLink="/incidencia" (click)="sidenav.toggle()">Gestion de incidencias</button>
+        <button mat-button routerLinkActive="active" routerLink="/incidencia" routerLinkActive="active" *ngIf="auth.loggedIn" (click)="sidenav.toggle()">Gestion de incidencias</button>
       </mat-toolbar-row>
       <mat-toolbar-row>
         <mat-icon class="example-icon">settings</mat-icon>
-        <button mat-button routerLinkActive="active" routerLink="/configuracion" (click)="sidenav.toggle()">Configuraciones</button>
+        <button mat-button routerLinkActive="active" routerLink="/configuracion" routerLinkActive="active" *ngIf="auth.loggedIn" (click)="sidenav.toggle()">Configuraciones</button>
+      </mat-toolbar-row>
+      <mat-toolbar-row>
+        <mat-icon class="example-icon">last_page</mat-icon>
+        <button mat-button routerLinkActive="active" (click)="logout()" href="#" *ngIf="auth.loggedIn">Log out</button>
       </mat-toolbar-row>
     </mat-toolbar>
   </mat-sidenav>
@@ -33,3 +37,15 @@
     </mat-card>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<!-- 
+<div class="container-fluid">
+  <h1>Angular Todo List</h1>
+  <nav class="nav nav-pills">
+    <a class="nav-link" routerLink="todos" routerLinkActive="active" *ngIf="auth.loggedIn">Todo List</a>
+    <a class="nav-link" routerLink="users" routerLinkActive="active" *ngIf="auth.loggedIn">Users</a>
+    <a class="nav-link" routerLink="login" routerLinkActive="active" *ngIf="!auth.loggedIn">Login</a>
+    <a class="nav-link" (click)="logout()" href="#" *ngIf="auth.loggedIn">Logout</a>
+  </nav>
+  <router-outlet></router-outlet>
+</div> -->

@@ -28,6 +28,15 @@ import { InicioComponent } from './inicio/inicio.component';
 import { MatRadioGroup } from '@angular/material';
 import { LoginComponent } from './login/login.component';
 
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthService } from './auth.service';
+import { AuthGuard } from './auth.guard';
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,9 +59,22 @@ import { LoginComponent } from './login/login.component';
     HttpClientModule,
     HttpModule,
     FlexLayoutModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:3000'],
+        blacklistedRoutes: ['localhost:3000/api/auth']
+      }
+    })
   ],
-  providers: [ApiService, HttpErrorHandler, MessageService, MatRadioGroup],
+  providers: [
+    ApiService,
+    HttpErrorHandler,
+    MessageService,
+    MatRadioGroup,
+    AuthService,
+    AuthGuard],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

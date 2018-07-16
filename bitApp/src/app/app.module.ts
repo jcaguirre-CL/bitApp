@@ -26,6 +26,7 @@ import { IncidenciaComponent } from './incidencia/incidencia.component';
 import { InicioComponent } from './inicio/inicio.component';
 
 import { MatRadioGroup } from '@angular/material';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MatRadioGroup } from '@angular/material';
     EventoComponent,
     ConfiguracionComponent,
     IncidenciaComponent,
-    InicioComponent
+    InicioComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

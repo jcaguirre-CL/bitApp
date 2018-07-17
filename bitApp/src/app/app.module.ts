@@ -32,6 +32,12 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+
+import { VideoPlayerModule } from './video-player/video-player.module';
+
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
@@ -66,6 +72,12 @@ export function tokenGetter() {
         whitelistedDomains: ['localhost:3000'],
         blacklistedRoutes: ['localhost:3000/api/auth']
       }
+    }),
+    VideoPlayerModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 10
     })
   ],
   providers: [

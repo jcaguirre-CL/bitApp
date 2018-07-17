@@ -6,6 +6,13 @@ import { VideoPlayerState } from '../../store/store.state';
 import * as StreamActions from '../../store/actions/stream.actions';
 import { Stream } from '../../store/models/stream';
 
+const canal: Array<Stream> = [
+  {
+    title: 'C13HD',
+    src: 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8'
+  }
+];
+
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'stream-list',
@@ -18,6 +25,7 @@ export class StreamListComponent implements OnInit {
   streamList$: Observable<any>;
   streams: Stream[];
   streamListSubscription: Subscription;
+  canal = canal;
 
   constructor(private store: Store<VideoPlayerState>) {
     this.store.dispatch(new StreamActions.FetchStreams());
@@ -28,6 +36,7 @@ export class StreamListComponent implements OnInit {
     this.streamList$.subscribe(
       (val: VideoPlayerState) => this.streams = val.streamList
     );
+    this.store.dispatch(new StreamActions.SetSelectedStream(this.canal[0]));
   }
 
   setSelectedStream(stream: Stream) {

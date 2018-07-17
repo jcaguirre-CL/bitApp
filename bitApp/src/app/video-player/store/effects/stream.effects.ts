@@ -9,7 +9,7 @@ import * as StreamActions from '../actions/stream.actions';
 const streams: Stream[] = [ // just pretending that we are loading data from an API in this effect.
     {
       title: 'C13i',
-      src: 'http://10.128.2.39/c13i/c13i-13i.m3u8'
+      src: 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8'
     },
     {
       title: 'T13Radio',

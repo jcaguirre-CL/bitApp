@@ -7,13 +7,13 @@ export enum StreamStatus {
 }
 
 export interface Stream {
-  src:   string,
-  title: string,
-  levels?: any,
-  playbackLevel?: any,
-  status?: StreamStatus
+  src:   string;
+  title: string;
+  levels?: any;
+  playbackLevel?: any;
+  status?: StreamStatus;
 }
 
 export interface StreamList {
-  streams: Stream[]
+  streams: Stream[];
 }

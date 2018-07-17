@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Player, PlayerStatus } from '../models/player'
+import { Player, PlayerStatus } from '../models/player';
 
 export const CHANGE_STATUS        = '[VIDEO] Change Status';
 export const CHANGE_LEVEL         = '[VIDEO] Change Level';
@@ -27,5 +27,5 @@ export class SetAvailableLevels implements Action {
 export type Actions =
   ChangePlayerStatus |
   ChangePlayerLevel  |
-  SetAvailableLevels
+  SetAvailableLevels;
 

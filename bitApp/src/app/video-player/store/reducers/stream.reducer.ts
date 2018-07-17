@@ -8,21 +8,21 @@ export const selectedStreamReducer = (state: Stream, action: StreamActions.Actio
     default:
       return state;
   }
-}
+};
 
 export const fetchStreamsReducer = (state: string = '', action: StreamActions.Actions) => {
   switch (action.type) {
     case StreamActions.FETCH_STREAMS:
-      return 'STREAMS FETCHED'
+      return 'STREAMS FETCHED';
     default:
       return state;
   }
-}
+};
 
 export const streamListReducer = (state: Stream[] = [], action: StreamActions.Actions) => {
   switch (action.type) {
     case StreamActions.SET_STREAMS:
-      return [...state, ...action.payload]
+      return [...state, ...action.payload];
     default:
       return state;
   }

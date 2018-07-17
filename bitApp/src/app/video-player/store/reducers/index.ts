@@ -8,12 +8,12 @@ export const reducers = {
   streamList: streamListReducer,
   selectedStream: selectedStreamReducer,
   player: PlayerReducers.reducer
-}
+};
 
 export interface VideoPlayerState {
-  readonly selectedStream: Stream,
-  readonly streamList: Stream[],
-  readonly player: Player
+  readonly selectedStream: Stream;
+  readonly streamList: Stream[];
+  readonly player: Player;
 }
 
 export const getVideoPlayerState = createFeatureSelector<VideoPlayerState>('videoPlayer');

@@ -168,18 +168,24 @@ export class EventoComponent implements OnInit {
         this.informeShort['responsable'] = this.informeLarge['responsable'];
         this.informeShort['turno'] = this.informeLarge['turno'];
         // setTimeout(() => {
-          this.apiService.buildInforme(this.informeShort).
-          subscribe(informe => {
-            console.log('!!!!!crear informe: ' + JSON.stringify(informe));
-            console.log('!!!!!crear informe: ' + informe['_id']);
-            for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
-              this.apiService.modifyEvento({'eventoId': String(this.arrayEventos[i]), 'informeId': String(informe['_id'])})
-              .subscribe(evento => {
-                console.log('Evento modificado: ' + JSON.stringify(evento));
-              });
-            }
-          });
-      }, 1000);
+        this.apiService.buildInforme(this.informeShort).
+        subscribe(informe => {
+          console.log('!!!!!crear informe: ' + JSON.stringify(informe));
+          console.log('!!!!!crear informe: ' + informe['_id']);
+          for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
+            this.apiService.modifyEvento({'eventoId': String(this.arrayEventos[i]), 'informeId': String(informe['_id'])})
+            .subscribe(evento => {
+              console.log('Evento modificado: ' + JSON.stringify(evento));
+            });
+          }
+        });
+        // tslint:disable-next-line:max-line-length
+        this.apiService.sendMail(this.arrayEventos, this.informeLarge['responsable'], this.informeLarge['turno'], this.informeLarge['fecha']).
+        subscribe(respon => {
+          console.log('correo enviado' + respon);
+        });
+      }, 1500);
+
       // return null;
     // }
 

@@ -91,7 +91,15 @@ export class ApiService {
   // getInformes(): Observable<InformeLarge[]> {
   //   return of(informesLarge).pipe(delay(this.delayMs)); // simulate latency with delay
   // }
-
+  sendMail(eventos, remitente, turno, fecha): Observable<any> {
+    // tslint:disable-next-line:max-line-length
+    console.log('enviar listado#################: ' + eventos);
+    // tslint:disable-next-line:max-line-length
+    return this.http.get(this._URL + 'sendMail/' + 'jcaguirrecl@gmail.com' + '/' + eventos + '/' + remitente + '/' + turno + '/' + fecha, httpOptions)
+    .pipe(
+      catchError(this.handleError('sendMail x Informe', []))
+    );
+  }
 
   obtenerLastEventoId () {
     return this.http.get(this._URL + 'Eventos/Last', httpOptions)

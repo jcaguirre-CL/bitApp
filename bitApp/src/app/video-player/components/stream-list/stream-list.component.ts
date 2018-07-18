@@ -9,7 +9,8 @@ import { Stream } from '../../store/models/stream';
 const canal: Array<Stream> = [
   {
     title: 'C13HD',
-    src: 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8'
+    // src: 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8'
+    src: 'http://10.128.2.39/c13i/c13i-13i.m3u8'
   }
 ];
 

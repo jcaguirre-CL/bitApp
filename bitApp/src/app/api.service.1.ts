@@ -4,7 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import {forkJoin} from 'rxjs';
 import { Observable, of } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
-import { InformeShort, Evento, informesLarge, InformeLarge, ListadoEventos, ModificarEventoInformeId } from './data-model';
+import { InformeShort, Evento, InformeLarge, ListadoEventos, ModificarEventoInformeId } from './data-model';
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 
 const httpOptions = {
@@ -134,9 +134,9 @@ export class ApiService {
   // }
 
 
-  getInformes(): Observable<InformeLarge[]> {
-    return of(informesLarge).pipe(delay(this.delayMs)); // simulate latency with delay
-  }
+  // getInformes(): Observable<InformeLarge[]> {
+  //   return of(informesLarge).pipe(delay(this.delayMs)); // simulate latency with delay
+  // }
 
   // updateInforme(informe: Informe): Observable<Informe>  {
   //   const oldHero = informes.find(i => i.informeId === informe.informeId);

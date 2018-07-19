@@ -4,7 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import {forkJoin} from 'rxjs';
 import { Observable, of } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
-import { InformeShort, Evento, informesLarge, InformeLarge, ListadoEventos, ModificarEventoInformeId } from './data-model';
+import { InformeShort, Evento, InformeLarge, ListadoEventos, ModificarEventoInformeId } from './data-model';
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 
 const httpOptions = {

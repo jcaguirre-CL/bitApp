@@ -16,7 +16,7 @@ import { DataSource } from '@angular/cdk/collections';
 })
 export class InformeComponent implements OnInit {
   informes: Observable<InformeLarge[]>;
-  displayedColumns = ['informeId', 'fecha', 'turno', 'responsable'];
+  displayedColumns = ['informeId', 'fecha', 'turno', 'respevento'];
   dataSource = new RegistroDataSource(this.apiService);
   isLoading = false;
   turnos =  turnos;
@@ -47,7 +47,7 @@ export class InformeComponent implements OnInit {
     this.informeForm = this.fb.group({
       fecha: '',
       turno: '',
-      responsable: '',
+      respevento: '',
       informeId: ''
     });
   }
@@ -64,7 +64,7 @@ export class InformeComponent implements OnInit {
       listadoEventos: formModel as Evento[],
       fecha: formModel.fecha as string,
       turno: formModel.turno as string,
-      responsable: formModel.responsable as string,
+      respevento: formModel.respevento as string,
       informeId: formModel.informeId as string,
     };
     return saveInforme;

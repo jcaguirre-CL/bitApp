@@ -1,20 +1,49 @@
 <form [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
   <div formArrayName="listadoEventos" class="well well-lg">
     <div *ngFor="let evento of listadoEventos.controls; let i=index" [formGroupName]="i" >
+      <mat-card class="card-central">
+        <mat-card-header>
+          <mat-list>
+            <mat-list-item>
+              <mat-card-title>
+                <h3>EVENTO #{{i + 1}}</h3>
+              </mat-card-title>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-header>
       <mat-divider></mat-divider>
-      <h3>EVENTO #{{i + 1}}</h3>
+
       <div style="margin-left: 1em;">
         <mat-list class="app-class">
-          <mat-list-item>
-            <mat-form-field>
-              <input matInput placeholder="Hora: " formControlName="hora">
-            </mat-form-field>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-form-field>
-              <input matInput placeholder="Informado por: " formControlName="informante">
-            </mat-form-field>
-          </mat-list-item>
+          <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+            <div fxFlex="33%">
+              <mat-list-item>
+                <mat-form-field>
+                  <input matInput placeholder="Hora: " formControlName="hora">
+                </mat-form-field>
+              </mat-list-item>
+            </div>
+            <div fxFlex="33%">
+              <mat-list-item>
+                <mat-form-field>
+                  <input matInput placeholder="Informado por: " formControlName="informante">
+                </mat-form-field>
+              </mat-list-item>
+            </div>
+            <div fxFlex="33%">
+              <mat-list-item>
+                <mat-form-field>
+                  <mat-select placeholder="Nivel: " formControlName="nivel">
+                    <mat-option *ngFor="let nivel of niveles" [value]="nivel">
+                      {{ nivel }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-list-item>
+            </div>
+          </div>
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+          <div fxFlex="33%">          
           <mat-list-item>
             <mat-form-field>
               <mat-select placeholder="Area afectada: " formControlName="area">
@@ -23,9 +52,9 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>    
-
           </mat-list-item>
-
+          </div>
+          <div fxFlex="33%">          
           <mat-list-item>
               <mat-form-field>
                 <mat-select placeholder="Programa: " formControlName="programa">
@@ -34,18 +63,20 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>    
-  
             </mat-list-item>
-
+          </div>
+          <div fxFlex="33%">          
           <mat-list-item>
             <mat-form-field>
-              <mat-select placeholder="Tipo de Falla: " formControlName="falla">
-                <mat-option *ngFor="let falla of fallas" [value]="falla">
-                  {{ falla }}
+              <mat-select placeholder="Tipo de Falla: " formControlName="tipofalla">
+                <mat-option *ngFor="let tipofalla of tipofallas" [value]="tipofalla">
+                  {{ tipofalla }}
                 </mat-option>
               </mat-select>
             </mat-form-field>    
           </mat-list-item>
+          </div>
+          </div>
           <mat-list-item>
             <mat-card class="example-form">
               <mat-card-header>
@@ -65,7 +96,7 @@
                   <mat-form-field>
                     <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
                       <mat-option *ngFor="let mamfalla of mamfallas" [value]="mamfalla">
-                        {{ mamfalla.falla }}
+                        {{ mamfalla.itemfalla }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>  
@@ -83,16 +114,34 @@
                   <mat-form-field>
                     <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
                       <mat-option *ngFor="let pamfalla of pamfallas" [value]="pamfalla">
-                        {{ pamfalla.falla }}
+                        {{ pamfalla.itemfalla }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>  
                 </mat-expansion-panel>      
                 
+              <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      EDICION
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      <!-- Seleccionar -->
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <mat-form-field>
+                    <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
+                      <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
+                        {{ edicionfalla.itemfalla }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>  
+                </mat-expansion-panel>                    
+              
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                       <mat-panel-title>
-                        EDICION
+                        POST AUDIO
                       </mat-panel-title>
                       <mat-panel-description>
                         <!-- Seleccionar -->
@@ -100,17 +149,17 @@
                     </mat-expansion-panel-header>
                     <mat-form-field>
                       <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                        <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                          {{ edicionfalla.falla }}
+                        <mat-option *ngFor="let postaudiofalla of postaudiofallas" [value]="postaudiofalla">
+                          {{ postaudiofalla.itemfalla }}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>  
                   </mat-expansion-panel>                    
-                
+              
                   <mat-expansion-panel>
                       <mat-expansion-panel-header>
                         <mat-panel-title>
-                          POST AUDIO
+                          CONECTIVIDAD
                         </mat-panel-title>
                         <mat-panel-description>
                           <!-- Seleccionar -->
@@ -118,17 +167,17 @@
                       </mat-expansion-panel-header>
                       <mat-form-field>
                         <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                          <mat-option *ngFor="let postaudiofalla of postaudiofallas" [value]="postaudiofalla">
-                            {{ postaudiofalla.falla }}
+                          <mat-option *ngFor="let conectividadfalla of conectividadfallas" [value]="conectividadfalla">
+                            {{ conectividadfalla.itemfalla }}
                           </mat-option>
                         </mat-select>
                       </mat-form-field>  
                     </mat-expansion-panel>                    
-                
+              
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                           <mat-panel-title>
-                            CONECTIVIDAD
+                            DATA CENTER
                           </mat-panel-title>
                           <mat-panel-description>
                             <!-- Seleccionar -->
@@ -136,17 +185,17 @@
                         </mat-expansion-panel-header>
                         <mat-form-field>
                           <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                            <mat-option *ngFor="let conectividadfalla of conectividadfallas" [value]="conectividadfalla">
-                              {{ conectividadfalla.falla }}
+                            <mat-option *ngFor="let datacenterfalla of datacenterfallas" [value]="datacenterfalla">
+                              {{ datacenterfalla.itemfalla }}
                             </mat-option>
                           </mat-select>
                         </mat-form-field>  
                       </mat-expansion-panel>                    
-                
+              
                       <mat-expansion-panel>
                           <mat-expansion-panel-header>
                             <mat-panel-title>
-                              DATA CENTER
+                              OPERACION
                             </mat-panel-title>
                             <mat-panel-description>
                               <!-- Seleccionar -->
@@ -154,17 +203,17 @@
                           </mat-expansion-panel-header>
                           <mat-form-field>
                             <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                              <mat-option *ngFor="let datacenterfalla of datacenterfallas" [value]="datacenterfalla">
-                                {{ datacenterfalla.falla }}
+                              <mat-option *ngFor="let operacionfalla of operacionfallas" [value]="operacionfalla">
+                                {{ operacionfalla.itemfalla }}
                               </mat-option>
                             </mat-select>
                           </mat-form-field>  
                         </mat-expansion-panel>                    
-                
+              
                         <mat-expansion-panel>
                             <mat-expansion-panel-header>
                               <mat-panel-title>
-                                OPERACION
+                                GRAFICA
                               </mat-panel-title>
                               <mat-panel-description>
                                 <!-- Seleccionar -->
@@ -172,17 +221,88 @@
                             </mat-expansion-panel-header>
                             <mat-form-field>
                               <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                <mat-option *ngFor="let operacionfalla of operacionfallas" [value]="operacionfalla">
-                                  {{ operacionfalla.falla }}
+                                <mat-option *ngFor="let graficafalla of graficafallas" [value]="graficafalla">
+                                  {{ graficafalla.itemfalla }}
                                 </mat-option>
                               </mat-select>
                             </mat-form-field>  
                           </mat-expansion-panel>                    
-                
+              
+                  <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          TRANSCODIFICACION
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          <!-- Seleccionar -->
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                      <mat-form-field>
+                        <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
+                          <mat-option *ngFor="let transcodificacionfalla of transcodificacionfallas" [value]="transcodifcacionfalla">
+                            {{ transcodificacionfalla.itemfalla }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>  
+                    </mat-expansion-panel>                    
+      
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            CODIFICACION
+                          </mat-panel-title>
+                          <mat-panel-description>
+                            <!-- Seleccionar -->
+                          </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <mat-form-field>
+                          <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
+                            <mat-option *ngFor="let codificacionfalla of codificacionfallas" [value]="codificacionfalla">
+                              {{ codificacionfalla.itemfalla }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>  
+                      </mat-expansion-panel>     
+
+                      <mat-expansion-panel>
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              13 ESTUDIOS
+                            </mat-panel-title>
+                            <mat-panel-description>
+                              <!-- Seleccionar -->
+                            </mat-panel-description>
+                          </mat-expansion-panel-header>
+                          <mat-form-field>
+                            <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
+                              <mat-option *ngFor="let estudios13falla of estudios13fallas" [value]="estudios13falla">
+                                {{ estudios13falla.itemfalla }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>  
+                        </mat-expansion-panel>                                                                           
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                              <mat-panel-title>
+                                INGESTA
+                              </mat-panel-title>
+                              <mat-panel-description>
+                                <!-- Seleccionar -->
+                              </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <mat-form-field>
+                              <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
+                                <mat-option *ngFor="let ingestafalla of ingestafallas" [value]="ingestafalla">
+                                  {{ ingestafalla.itemfalla }}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>  
+                                  </mat-expansion-panel>   
+
                           <mat-expansion-panel>
                               <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                  GRAFICA
+                                    EMISION AUTOMATIZADA
                                 </mat-panel-title>
                                 <mat-panel-description>
                                   <!-- Seleccionar -->
@@ -190,17 +310,16 @@
                               </mat-expansion-panel-header>
                               <mat-form-field>
                                 <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                  <mat-option *ngFor="let graficafalla of graficafallas" [value]="graficafalla">
-                                    {{ graficafalla.falla }}
+                                  <mat-option *ngFor="let emisionautofalla of emisionautofallas" [value]="emisionautofalla">
+                                    {{ emisionautofalla.itemfalla }}
                                   </mat-option>
                                 </mat-select>
                               </mat-form-field>  
-                            </mat-expansion-panel>                    
-                
+                            </mat-expansion-panel>   
                             <mat-expansion-panel>
                                 <mat-expansion-panel-header>
                                   <mat-panel-title>
-                                    TRANSCODIFICACION
+                                      INEWS
                                   </mat-panel-title>
                                   <mat-panel-description>
                                     <!-- Seleccionar -->
@@ -208,17 +327,17 @@
                                 </mat-expansion-panel-header>
                                 <mat-form-field>
                                   <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                    <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                                      {{ edicionfalla.falla }}
+                                    <mat-option *ngFor="let inewsfalla of inewsfallas" [value]="inewsfalla">
+                                      {{ inewsfalla.itemfalla }}
                                     </mat-option>
                                   </mat-select>
                                 </mat-form-field>  
-                              </mat-expansion-panel>                    
-                
+                              </mat-expansion-panel>   
+
                               <mat-expansion-panel>
                                   <mat-expansion-panel-header>
                                     <mat-panel-title>
-                                      CODIFICACION
+                                        TRANSMISION
                                     </mat-panel-title>
                                     <mat-panel-description>
                                       <!-- Seleccionar -->
@@ -226,17 +345,53 @@
                                   </mat-expansion-panel-header>
                                   <mat-form-field>
                                     <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                      <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                                        {{ edicionfalla.falla }}
+                                      <mat-option *ngFor="let transmisionfalla of transmisionfallas" [value]="transmisionfalla">
+                                        {{ transmisionfalla.itemfalla }}
                                       </mat-option>
                                     </mat-select>
                                   </mat-form-field>  
-                                </mat-expansion-panel>     
+                                </mat-expansion-panel>   
+
+                          <mat-expansion-panel>
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    RECEPCION DE CONTENIDOS
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                  <!-- Seleccionar -->
+                                </mat-panel-description>
+                              </mat-expansion-panel-header>
+                              <mat-form-field>
+                                <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
+                                  <mat-option *ngFor="let recepcioncontefalla of recepcioncontefallas" [value]="recepcioncontefalla">
+                                    {{ recepcioncontefalla.itemfalla }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>  
+                            </mat-expansion-panel>   
+
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                  <mat-panel-title>
+                                      LIBRERIAS MUSICALES
+                                  </mat-panel-title>
+                                  <mat-panel-description>
+                                    <!-- Seleccionar -->
+                                  </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <mat-form-field>
+                                  <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
+                                    <mat-option *ngFor="let libreriamusicalfalla of libreriamusicalfallas" [value]="libreriamusicalfalla">
+                                      {{ libreriamusicalfalla.itemfalla }}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>  
+                              </mat-expansion-panel>     
 
                                 <mat-expansion-panel>
                                     <mat-expansion-panel-header>
                                       <mat-panel-title>
-                                        13 ESTUDIOS
+                                          ELECTRICIDAD
                                       </mat-panel-title>
                                       <mat-panel-description>
                                         <!-- Seleccionar -->
@@ -244,16 +399,16 @@
                                     </mat-expansion-panel-header>
                                     <mat-form-field>
                                       <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                        <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                                          {{ edicionfalla.falla }}
+                                        <mat-option *ngFor="let electricidadfalla of electricidadfallas" [value]="electricidadfalla">
+                                          {{ electricidadfalla.itemfalla }}
                                         </mat-option>
                                       </mat-select>
                                     </mat-form-field>  
-                                  </mat-expansion-panel>                                                                           
+                                  </mat-expansion-panel>
                                   <mat-expansion-panel>
                                       <mat-expansion-panel-header>
                                         <mat-panel-title>
-                                          INGESTA
+                                            OTRAS
                                         </mat-panel-title>
                                         <mat-panel-description>
                                           <!-- Seleccionar -->
@@ -261,137 +416,12 @@
                                       </mat-expansion-panel-header>
                                       <mat-form-field>
                                         <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                          <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                                            {{ edicionfalla.falla }}
+                                          <mat-option *ngFor="let otrasfalla of otrasfallas" [value]="otrasfalla">
+                                            {{ otrasfalla.itemfalla }}
                                           </mat-option>
                                         </mat-select>
                                       </mat-form-field>  
-                                    </mat-expansion-panel>   
-
-                                    <mat-expansion-panel>
-                                        <mat-expansion-panel-header>
-                                          <mat-panel-title>
-                                              EMISION AUTOMATIZADA
-                                          </mat-panel-title>
-                                          <mat-panel-description>
-                                            <!-- Seleccionar -->
-                                          </mat-panel-description>
-                                        </mat-expansion-panel-header>
-                                        <mat-form-field>
-                                          <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                            <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                                              {{ edicionfalla.falla }}
-                                            </mat-option>
-                                          </mat-select>
-                                        </mat-form-field>  
-                                      </mat-expansion-panel>   
-                                      <mat-expansion-panel>
-                                          <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                INEWS
-                                            </mat-panel-title>
-                                            <mat-panel-description>
-                                              <!-- Seleccionar -->
-                                            </mat-panel-description>
-                                          </mat-expansion-panel-header>
-                                          <mat-form-field>
-                                            <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                              <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                                                {{ edicionfalla.falla }}
-                                              </mat-option>
-                                            </mat-select>
-                                          </mat-form-field>  
-                                        </mat-expansion-panel>   
-
-                                        <mat-expansion-panel>
-                                            <mat-expansion-panel-header>
-                                              <mat-panel-title>
-                                                  TRANSMISION
-                                              </mat-panel-title>
-                                              <mat-panel-description>
-                                                <!-- Seleccionar -->
-                                              </mat-panel-description>
-                                            </mat-expansion-panel-header>
-                                            <mat-form-field>
-                                              <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                                <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                                                  {{ edicionfalla.falla }}
-                                                </mat-option>
-                                              </mat-select>
-                                            </mat-form-field>  
-                                          </mat-expansion-panel>   
-
-                                          <mat-expansion-panel>
-                                              <mat-expansion-panel-header>
-                                                <mat-panel-title>
-                                                    RECEPCION DE CONTENIDOS
-                                                </mat-panel-title>
-                                                <mat-panel-description>
-                                                  <!-- Seleccionar -->
-                                                </mat-panel-description>
-                                              </mat-expansion-panel-header>
-                                              <mat-form-field>
-                                                <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                                  <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                                                    {{ edicionfalla.falla }}
-                                                  </mat-option>
-                                                </mat-select>
-                                              </mat-form-field>  
-                                            </mat-expansion-panel>   
-
-                                            <mat-expansion-panel>
-                                                <mat-expansion-panel-header>
-                                                  <mat-panel-title>
-                                                      LIBRERIAS MUSICALES
-                                                  </mat-panel-title>
-                                                  <mat-panel-description>
-                                                    <!-- Seleccionar -->
-                                                  </mat-panel-description>
-                                                </mat-expansion-panel-header>
-                                                <mat-form-field>
-                                                  <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                                    <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                                                      {{ edicionfalla.falla }}
-                                                    </mat-option>
-                                                  </mat-select>
-                                                </mat-form-field>  
-                                              </mat-expansion-panel>   
-
-                                              <mat-expansion-panel>
-                                                  <mat-expansion-panel-header>
-                                                    <mat-panel-title>
-                                                        OTRAS
-                                                    </mat-panel-title>
-                                                    <mat-panel-description>
-                                                      <!-- Seleccionar -->
-                                                    </mat-panel-description>
-                                                  </mat-expansion-panel-header>
-                                                  <mat-form-field>
-                                                    <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                                      <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                                                        {{ edicionfalla.falla }}
-                                                      </mat-option>
-                                                    </mat-select>
-                                                  </mat-form-field>  
-                                                </mat-expansion-panel>   
-
-                                                <mat-expansion-panel>
-                                                    <mat-expansion-panel-header>
-                                                      <mat-panel-title>
-                                                          ELECTRICIDAD
-                                                      </mat-panel-title>
-                                                      <mat-panel-description>
-                                                        <!-- Seleccionar -->
-                                                      </mat-panel-description>
-                                                    </mat-expansion-panel-header>
-                                                    <mat-form-field>
-                                                      <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                                                        <mat-option *ngFor="let edicionfalla of edicionfallas" [value]="edicionfalla">
-                                                          {{ edicionfalla.falla }}
-                                                        </mat-option>
-                                                      </mat-select>
-                                                    </mat-form-field>  
-                                                  </mat-expansion-panel>   
+                                    </mat-expansion-panel>    
               </mat-accordion>
             </mat-card>
           </mat-list-item>          
@@ -408,7 +438,7 @@
 
           <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
             <div fxFlex="50%">
-              <mat-card class="card-central">
+              <!-- <mat-card class="card-central"> -->
                 <mat-list-item>
                   <label class="center-block">Estado:
                     <mat-radio-group class="example-radio-group" formControlName="estado">
@@ -418,25 +448,49 @@
                     </mat-radio-group>
                   </label>
                 </mat-list-item>
-              </mat-card>
+              <!-- </mat-card> -->
             </div>
             <div fxFlex="50%">
-              <mat-card class="card-central">
+              <!-- <mat-card class="card-central"> -->
                 <mat-list-item>
-                  <label class="center-block">Responsable:
-                    <mat-radio-group class="example-radio-group" formControlName="responsabilidad">
-                      <mat-radio-button class="example-radio-button" *ngFor="let responsabilidad of responsabilidades" [value]="responsabilidad">
-                        {{responsabilidad}}
+                  <label class="center-block">Atención:
+                    <mat-radio-group class="example-radio-group" formControlName="atencion">
+                      <mat-radio-button class="example-radio-button" *ngFor="let atencion of atenciones" [value]="atencion">
+                        {{atencion}}
                       </mat-radio-button>
                     </mat-radio-group>
                   </label>
                 </mat-list-item>
-              </mat-card>
+              <!-- </mat-card> -->
             </div>
           </div>
 
+          <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+              <div fxFlex="50%">
+                <!-- <mat-card class="card-central"> -->
+                  <mat-list-item>
+                    <mat-form-field>
+                      <input matInput placeholder="Responsable Operacion: " formControlName="respoperacion">
+                    </mat-form-field>
+                  </mat-list-item>
+                <!-- </mat-card> -->
+              </div>
+              <div fxFlex="50%">
+                <!-- <mat-card class="card-central"> -->
+                  <mat-list-item>
+                    <mat-form-field>
+                      <input matInput [matDatepicker]="picker" placeholder="Fecha de Resolucion" formControlName="fechares">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>              
+                  </mat-list-item>
+                <!-- </mat-card> -->
+              </div>
+            </div>
+
         </mat-list>
       </div>
+      </mat-card>
     </div>
   </div>
   <mat-divider></mat-divider>

@@ -5,7 +5,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
 
 // tslint:disable-next-line:max-line-length
-import { InformeShort, InformeLarge, Evento, ListadoEventos, Plataforma, estados, areas, programas, fallas, responsabilidades } from '../data-model';
+import { InformeShort, InformeLarge, Evento, ListadoEventos, niveles, estados, areas, programas,
+   tipofallas, atenciones, mamfallas, pamfallas, edicionfallas, postaudiofallas, conectividadfallas,
+  datacenterfallas, operacionfallas, transcodificacionfallas, codificacionfallas, estudios13fallas, ingestafallas,
+  emisionautofallas, inewsfallas, recepcioncontefallas, transmisionfallas, libreriamusicalfallas,
+  otrasfallas, graficafallas, electricidadfallas} from '../data-model';
 import { ApiService } from '../api.service';
 import { all } from 'q';
 
@@ -30,83 +34,32 @@ export class EventoComponent implements OnInit {
   arrayEventos: Array<String>[] = [];
   informeShort = informeShort;
 
-////
-  // mamFalla: string;
-  // pamFalla: string;
-  // mamfallas: string[] = ['Transferencia', 'Busqueda', 'Cinta'];
-  // mamfallas: new Subject<any[]>();
-  mamfallas = [
-    {nombre: 'MAM', falla: 'Tx Cinta'},
-    {nombre: 'MAM', falla: 'Tx Integracion'},
-    {nombre: 'MAM', falla: 'Libreria'},
-    {nombre: 'MAM', falla: 'Storage'},
-    {nombre: 'MAM', falla: 'Discos'},
-    {nombre: 'MAM', falla: 'Servidor'}
-  ];
-  pamfallas = [
-    {nombre: 'PAM', falla: 'Interplay'},
-    {nombre: 'PAM', falla: 'Storage'},
-    {nombre: 'PAM', falla: 'Discos'},
-    {nombre: 'PAM', falla: 'Workspaces'},
-    {nombre: 'PAM', falla: 'Command Server'}
-  ];
-  edicionfallas = [
-    {nombre: 'EDICION', falla: 'Aplicación'},
-    {nombre: 'EDICION', falla: 'Superficie Control'},
-    {nombre: 'EDICION', falla: 'WorkStation'},
-    {nombre: 'EDICION', falla: 'MediaIndexer'},
-    {nombre: 'EDICION', falla: 'Mojo'},
-    {nombre: 'EDICION', falla: 'Conversor'},
-    {nombre: 'EDICION', falla: 'Periféricos'},
-  ];
-  postaudiofallas = [
-    {nombre: 'POST-AUDIO', falla: 'Aplicación'},
-    {nombre: 'POST-AUDIO', falla: 'WorkStation'},
-    {nombre: 'POST-AUDIO', falla: 'Superficie Control'},
-  ];
-  conectividadfallas = [
-    {nombre: 'CONECTIVIDAD', falla: 'ISP Internet'},
-    {nombre: 'CONECTIVIDAD', falla: 'Firewall'},
-    {nombre: 'CONECTIVIDAD', falla: 'Balanceador'},
-    {nombre: 'CONECTIVIDAD', falla: 'Switch'},
-    {nombre: 'CONECTIVIDAD', falla: 'Cableado'},
-    {nombre: 'CONECTIVIDAD', falla: 'ISP Regiones'},
-    {nombre: 'CONECTIVIDAD', falla: 'Wifi'}
-  ];
-  datacenterfallas = [
-    {nombre: 'DATACENTER', falla: 'Clima'},
-    {nombre: 'DATACENTER', falla: 'Servicios GG'},
-    {nombre: 'DATACENTER', falla: 'Acceso'},
-    {nombre: 'DATACENTER', falla: 'Workspaces'},
-    {nombre: 'DATACENTER', falla: 'PDU'}
-  ];
-  operacionfallas = [
-    {nombre: 'OPERACION', falla: 'Play Out'},
-    {nombre: 'OPERACION', falla: 'Skype'},
-  ];
-  graficafallas = [
-    {nombre: 'GRAFICA', falla: 'Engine'},
-    {nombre: 'GRAFICA', falla: 'Hub'},
-    {nombre: 'GRAFICA', falla: 'Aplicación'},
-    {nombre: 'GRAFICA', falla: 'Branding'}
-  ];
-  transcodificacionfallas = [
-    {nombre: 'TRANSCODIFICACION', falla: 'Transcode'},
-  ];
-  codificacionfallas = [
-    {nombre: 'CODIFICACION', falla: 'Encoder vivo'},
-    {nombre: 'CODIFICACION', falla: 'Dispositivo 4G'},
-    {nombre: 'CODIFICACION', falla: 'Encoder transporte'}
-  ];
-  // pamfallas: string[] = ['Permisos', 'Base de Datos', 'Servicios'];
-
-
+  mamfallas = mamfallas;
+  pamfallas = pamfallas;
+  edicionfallas = edicionfallas;
+  postaudiofallas = postaudiofallas;
+  conectividadfallas = conectividadfallas;
+  datacenterfallas = datacenterfallas;
+  operacionfallas = operacionfallas;
+  graficafallas = graficafallas;
+  transcodificacionfallas = transcodificacionfallas;
+  codificacionfallas = codificacionfallas;
+  estudios13fallas = estudios13fallas;
+  ingestafallas = ingestafallas;
+  emisionautofallas = emisionautofallas;
+  inewsfallas = inewsfallas;
+  transmisionfallas = transmisionfallas;
+  recepcioncontefallas = recepcioncontefallas;
+  libreriamusicalfallas = libreriamusicalfallas;
+  electricidadfallas = electricidadfallas;
+  otrasfallas = otrasfallas;
 
   estados = estados;
   areas = areas;
+  niveles = niveles;
   programas = programas;
-  fallas = fallas;
-  responsabilidades = responsabilidades;
+  tipofallas = tipofallas;
+  atenciones = atenciones;
 
   constructor(
     private fb: FormBuilder,
@@ -165,7 +118,7 @@ export class EventoComponent implements OnInit {
           this.informeShort['listadoEventos'].push({_id: this.arrayEventos[i]});
         }
         this.informeShort['fecha'] = this.informeLarge['fecha'];
-        this.informeShort['responsable'] = this.informeLarge['responsable'];
+        this.informeShort['respevento'] = this.informeLarge['respevento'];
         this.informeShort['turno'] = this.informeLarge['turno'];
         // setTimeout(() => {
         this.apiService.buildInforme(this.informeShort).
@@ -180,7 +133,7 @@ export class EventoComponent implements OnInit {
           }
         });
         // tslint:disable-next-line:max-line-length
-        this.apiService.sendMail(this.arrayEventos, this.informeLarge['responsable'], this.informeLarge['turno'], this.informeLarge['fecha']).
+        this.apiService.sendMail(this.arrayEventos, this.informeLarge['respevento'], this.informeLarge['turno'], this.informeLarge['fecha']).
         subscribe(respon => {
           console.log('correo enviado' + respon);
         });
@@ -211,7 +164,7 @@ export class EventoComponent implements OnInit {
   onChanges(): void {
     this.eventoForm.valueChanges.subscribe(val => {
       this.informeLocal = this.prepararInforme();
-      this.informeLocal.responsable = this.informe.responsable;
+      this.informeLocal.respevento = this.informe.respevento;
       this.informeLocal.fecha = this.informe.fecha;
       this.informeLocal.turno = this.informe.turno;
       this.informeLocal.informeId = this.informe.informeId;
@@ -222,7 +175,7 @@ export class EventoComponent implements OnInit {
 
     try {
       this.eventoForm.value['listadoEventos'].forEach(item => {
-        item.responsableEvento = this.informeLocal.responsable;
+        item.responsableEvento = this.informeLocal.respevento;
         item.fecha = this.informeLocal.fecha;
         ////
         item.turno = this.informeLocal.turno;

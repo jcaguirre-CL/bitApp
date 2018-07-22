@@ -442,7 +442,7 @@
                 <mat-list-item>
                   <label class="center-block">Estado:
                     <mat-radio-group class="example-radio-group" formControlName="estado">
-                      <mat-radio-button class="example-radio-button" *ngFor="let estado of estados" [value]="estado">
+                      <mat-radio-button class="example-radio-button" *ngFor="let estado of estados" [value]="estado" align="left">
                         {{estado}}
                       </mat-radio-button>
                     </mat-radio-group>
@@ -455,7 +455,7 @@
                 <mat-list-item>
                   <label class="center-block">Atención:
                     <mat-radio-group class="example-radio-group" formControlName="atencion">
-                      <mat-radio-button class="example-radio-button" *ngFor="let atencion of atenciones" [value]="atencion">
+                      <mat-radio-button class="example-radio-button" *ngFor="let atencion of atenciones" [value]="atencion" align="left">
                         {{atencion}}
                       </mat-radio-button>
                     </mat-radio-group>

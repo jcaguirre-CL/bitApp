@@ -76,6 +76,14 @@ export class ApiService {
         catchError(this.handleError('getInformes', []))
       );
   }
+
+  getIncidencias(): Observable<any> {
+    return this.http.get(this._URL + 'Eventos', httpOptions)
+      .pipe(
+        catchError(this.handleError('getIncidencias', []))
+      );
+  }
+
   getEvento(eventoId): Observable<any> {
     return this.http.get(this._URL + 'Evento/' + eventoId, httpOptions)
       .pipe(

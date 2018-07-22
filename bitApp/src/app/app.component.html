@@ -25,7 +25,7 @@
       </mat-toolbar-row>
       <mat-toolbar-row>
         <mat-icon class="example-icon">settings</mat-icon>
-        <button mat-button routerLinkActive="active" routerLink="/configuracion" routerLinkActive="active" *ngIf="auth.loggedIn" (click)="sidenav.toggle()">Configuraciones</button>
+        <button mat-button [disabled]="true" routerLinkActive="active" routerLink="/configuracion" routerLinkActive="active" *ngIf="auth.loggedIn" (click)="sidenav.toggle()">Configuraciones</button>
       </mat-toolbar-row>
       <mat-toolbar-row>
         <mat-icon class="example-icon">last_page</mat-icon>

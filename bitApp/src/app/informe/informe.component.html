@@ -117,7 +117,7 @@
         </ng-container>
         <ng-container matColumnDef="fecha">
             <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
-            <mat-cell *matCellDef="let informe"> {{informe.fecha}} </mat-cell>
+            <mat-cell *matCellDef="let informe"> {{informe.fecha | date}} </mat-cell>
         </ng-container>        
         <ng-container matColumnDef="turno">
             <mat-header-cell *matHeaderCellDef> Turno </mat-header-cell>

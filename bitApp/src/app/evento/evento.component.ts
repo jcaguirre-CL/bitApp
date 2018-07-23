@@ -28,6 +28,7 @@ export class EventoComponent implements OnInit {
   informeLocal: InformeLarge;
   evento: Evento;
   eventoForm: FormGroup;
+  haveEvent = false;
 
 ////
   informeLarge: InformeLarge;
@@ -76,6 +77,7 @@ export class EventoComponent implements OnInit {
   }
 
   rebuildForm() {
+    this.haveEvent = false;
     for (let i = 0, len = this.listadoEventos.length; i < len + 1; i++) {
       this.listadoEventos.removeAt(0);
     }
@@ -96,63 +98,58 @@ export class EventoComponent implements OnInit {
 
   agregarEvento() {
     this.listadoEventos.push(this.fb.group(new Evento()));
+    this.haveEvent = true;
     console.log('agregarEvento(): ', this.listadoEventos);
   }
 
   onSubmit() {
       this.informeLarge = this.informeLocal;
-      console.log('crear Informe: ' + JSON.stringify(this.informeLarge));
-      this.eventos = this.informeLarge['listadoEventos'];
-      for (let i = 0, len = this.eventos.length; i < len; i++) {
-        this.apiService.buildEvento(this.eventos[i])
-        .subscribe(evento => {
-          console.log('creando: ' + JSON.stringify(evento));
-          this.arrayEventos.push(evento['_id']);
-          console.log('arrayeventos: ' + this.arrayEventos);
+      // console.log('crear Informe: ' + JSON.stringify(this.informeLarge));
+      if (this.haveEvent) {
+        console.log('##################si evetos');
+        this.eventos = this.informeLarge['listadoEventos'];
+        for (let i = 0, len = this.eventos.length; i < len; i++) {
+          this.apiService.buildEvento(this.eventos[i])
+          .subscribe(evento => {
+            console.log('creando: ' + JSON.stringify(evento));
+            this.arrayEventos.push(evento['_id']);
+            console.log('arrayeventos: ' + this.arrayEventos);
+          });
+        }
+        setTimeout(() => {
+          console.log('sdsd: ' + this.arrayEventos);
+          console.log('sdsd: ' + JSON.stringify(this.informeShort));
+          for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
+            this.informeShort['listadoEventos'].push({_id: this.arrayEventos[i]});
+          }
+          this.informeShort['fecha'] = this.informeLarge['fecha'];
+          this.informeShort['respevento'] = this.informeLarge['respevento'];
+          this.informeShort['turno'] = this.informeLarge['turno'];
+          // setTimeout(() => {
+          this.apiService.buildInforme(this.informeShort).
+          subscribe(informe => {
+            console.log('!!!!!crear informe: ' + JSON.stringify(informe));
+            console.log('!!!!!crear informe: ' + informe['_id']);
+            for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
+              this.apiService.modifyEvento({'eventoId': String(this.arrayEventos[i]), 'informeId': String(informe['_id'])})
+              .subscribe(evento => {
+                console.log('Evento modificado: ' + JSON.stringify(evento));
+              });
+            }
+          });
+          // tslint:disable-next-line:max-line-length
+          this.apiService.sendMail(this.arrayEventos, this.informeLarge['respevento'], this.informeLarge['turno'], this.informeLarge['fecha']).
+          subscribe(respon => {
+            console.log('correo enviado' + respon);
+          });
+        }, 1500);
+      } else {
+        // tslint:disable-next-line:max-line-length
+        this.apiService.sendMail(new Array, this.informe.respevento, this.informe.turno, this.informe.fecha).
+        subscribe(respon => {
+          console.log('##################no evetos');
         });
       }
-      setTimeout(() => {
-        console.log('sdsd: ' + this.arrayEventos);
-        console.log('sdsd: ' + JSON.stringify(this.informeShort));
-        for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
-          this.informeShort['listadoEventos'].push({_id: this.arrayEventos[i]});
-        }
-        this.informeShort['fecha'] = this.informeLarge['fecha'];
-        this.informeShort['respevento'] = this.informeLarge['respevento'];
-        this.informeShort['turno'] = this.informeLarge['turno'];
-        // setTimeout(() => {
-        this.apiService.buildInforme(this.informeShort).
-        subscribe(informe => {
-          console.log('!!!!!crear informe: ' + JSON.stringify(informe));
-          console.log('!!!!!crear informe: ' + informe['_id']);
-          for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
-            this.apiService.modifyEvento({'eventoId': String(this.arrayEventos[i]), 'informeId': String(informe['_id'])})
-            .subscribe(evento => {
-              console.log('Evento modificado: ' + JSON.stringify(evento));
-            });
-          }
-        });
-        // tslint:disable-next-line:max-line-length
-        this.apiService.sendMail(this.arrayEventos, this.informeLarge['respevento'], this.informeLarge['turno'], this.informeLarge['fecha']).
-        subscribe(respon => {
-          console.log('correo enviado' + respon);
-        });
-      }, 1500);
-
-      // return null;
-    // }
-
-
-
-    // this.apiService.crearInforme(this.informeLocal).subscribe(
-    //   data => {
-    //     return true;
-    //   },
-    //   error => {
-    //     console.error('Error creando registro');
-    //     return Observable.throw(error);
-    //   }
-    // );
     this.rebuildForm();
   }
 

@@ -91,19 +91,19 @@ export class IncidenciaComponent implements OnInit {
       console.log('enviar correo');
     } else {
       console.log('no enviar correo');
+      this.apiService.buildEvento(this.incidenciaForm.value).
+      subscribe(data => {
+        console.log('!!!!!crear incidencia: ' + JSON.stringify(data));
+      });
     }
-    this.apiService.buildEvento(this.incidenciaForm.value).
-    subscribe(data => {
-      console.log('!!!!!crear incidencia: ' + JSON.stringify(data));
-      // console.log('!!!!!crear informe: ' + informe['_id']);
+    this.incidenciaForm.reset();
+          // console.log('!!!!!crear informe: ' + informe['_id']);
       // for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
       //   this.apiService.modifyEvento({'eventoId': String(this.arrayEventos[i]), 'informeId': String(informe['_id'])})
       //   .subscribe(evento => {
       //     console.log('Evento modificado: ' + JSON.stringify(evento));
       //   });
       // }
-    });
-    this.incidenciaForm.reset();
   }
 
   ngOnInit() {

@@ -17,14 +17,14 @@
             <mat-list class="app-class">
               <mat-list-item>
                 <mat-form-field>
-                  <input matInput [matDatepicker]="picker" placeholder="Fecha Incidente" formControlName="fecha">
+                  <input matInput [matDatepicker]="picker" placeholder="Fecha Incidente (*)" formControlName="fecha">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>              
               </mat-list-item>
               <mat-list-item>
                 <mat-form-field>
-                    <mat-select placeholder="Responsable" formControlName="respevento">
+                    <mat-select placeholder="Responsable: (*)" formControlName="respevento">
                       <mat-option *ngFor="let responsable of responsables" [value]="responsable.nombre">
                         {{ responsable.nombre }}
                       </mat-option>
@@ -35,7 +35,7 @@
                 <div fxFlex="33%">
                   <mat-list-item>
                     <mat-form-field>
-                      <input matInput placeholder="Hora: " formControlName="hora">
+                      <input matInput placeholder="Hora: (*)" formControlName="hora">
                     </mat-form-field>
                   </mat-list-item>
                 </div>
@@ -49,7 +49,7 @@
                 <div fxFlex="33%">
                   <mat-list-item>
                     <mat-form-field>
-                      <mat-select placeholder="Nivel: " formControlName="nivel">
+                      <mat-select placeholder="Nivel: (*)" formControlName="nivel">
                         <mat-option *ngFor="let nivel of niveles" [value]="nivel">
                           {{ nivel }}
                         </mat-option>
@@ -62,7 +62,7 @@
                 <div fxFlex="33%">          
                   <mat-list-item>
                     <mat-form-field>
-                      <mat-select placeholder="Area afectada: " formControlName="area">
+                      <mat-select placeholder="Area afectada: (*)" formControlName="area">
                         <mat-option *ngFor="let area of areas" [value]="area">
                           {{ area }}
                         </mat-option>
@@ -73,7 +73,7 @@
                 <div fxFlex="33%">          
                   <mat-list-item>
                     <mat-form-field>
-                      <mat-select placeholder="Programa: " formControlName="programa">
+                      <mat-select placeholder="Programa: (*)" formControlName="programa">
                         <mat-option *ngFor="let programa of programas" [value]="programa">
                           {{ programa }}
                         </mat-option>
@@ -84,7 +84,7 @@
                 <div fxFlex="33%">          
                   <mat-list-item>
                     <mat-form-field>
-                      <mat-select placeholder="Tipo de Falla: " formControlName="tipofalla">
+                      <mat-select placeholder="Tipo de Falla: (*)" formControlName="tipofalla">
                         <mat-option *ngFor="let tipofalla of tipofallas" [value]="tipofalla">
                           {{ tipofalla }}
                         </mat-option>
@@ -97,7 +97,7 @@
               <mat-list-item class="alinear-center">
                 <mat-card class="example-form">
                   <mat-card-header>
-                    <mat-card-title><h4>Plataformas</h4></mat-card-title>
+                    <mat-card-title><h4>Plataformas (*)</h4></mat-card-title>
                   </mat-card-header>
                   <mat-accordion>
 
@@ -252,7 +252,7 @@
                       </mat-expansion-panel-header>
                       <mat-form-field>
                         <mat-select placeholder="Tipo de Falla: " formControlName="plataforma">
-                          <mat-option *ngFor="let transcodificacionfalla of transcodificacionfallas" [value]="transcodifcacionfalla">
+                          <mat-option *ngFor="let transcodificacionfalla of transcodificacionfallas" [value]="transcodificacionfalla">
                             {{ transcodificacionfalla.itemfalla }}
                           </mat-option>
                         </mat-select>
@@ -445,19 +445,19 @@
               </div>       
               <mat-list-item>
                 <mat-form-field class="example-form">
-                  <textarea matInput placeholder="Descripcion del evento: " formControlName="descripcion"></textarea>
+                  <textarea matInput placeholder="Descripcion del evento: (*)" formControlName="descripcion"></textarea>
                 </mat-form-field>
               </mat-list-item>
               <mat-list-item>
                 <mat-form-field class="example-form">
-                  <textarea matInput placeholder="Descripcion de la solucion: " formControlName="solucion"></textarea>
+                  <textarea matInput placeholder="Descripcion de la solucion: (*)" formControlName="solucion"></textarea>
                 </mat-form-field>
               </mat-list-item>
   
               <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
                 <div fxFlex="50%">
                   <mat-list-item>
-                    <label class="center-block">Estado:
+                    <label class="center-block">Estado: (*)
                       <mat-radio-group class="example-radio-group" formControlName="estado">
                         <mat-radio-button class="example-radio-button" *ngFor="let estado of estados" [value]="estado" align="left">
                           {{estado}}
@@ -468,7 +468,7 @@
                 </div>
                 <div fxFlex="50%">
                   <mat-list-item>
-                    <label class="center-block">Atención:
+                    <label class="center-block">Atención: (*)
                       <mat-radio-group class="example-radio-group" formControlName="atencion">
                         <mat-radio-button class="example-radio-button" *ngFor="let atencion of atenciones" [value]="atencion" align="left">
                           {{atencion}}

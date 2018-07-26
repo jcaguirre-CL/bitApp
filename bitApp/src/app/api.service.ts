@@ -101,7 +101,7 @@ export class ApiService {
   // }
   sendMail(eventos, remitente, turno, fecha): Observable<any> {
     if (eventos.length) {
-      console.log('###################################mas de un evento');
+      console.log('###################################mas de cero evento');
       // tslint:disable-next-line:max-line-length
       return this.http.get(this._URL + 'sendMail/' + 'jcaguirrecl@gmail.com' + '/' + eventos + '/' + remitente + '/' + turno + '/' + fecha, httpOptions)
       .pipe(
@@ -118,7 +118,14 @@ export class ApiService {
     // tslint:disable-next-line:max-line-length
     // console.log('enviar listado#################: ' + eventos);
     // tslint:disable-next-line:max-line-length
+  }
 
+  sendMail1Evento(eventos, remitente, fecha): Observable<any> {
+      // tslint:disable-next-line:max-line-length
+      return this.http.get(this._URL + 'sendMail1Evento/' + 'jcaguirrecl@gmail.com' + '/' + JSON.stringify(eventos) + '/' + remitente + '/' + fecha, httpOptions)
+      .pipe(
+        catchError(this.handleError('sendMail x 1 Evento', []))
+      );
   }
 
   obtenerLastEventoId () {

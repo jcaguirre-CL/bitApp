@@ -13,8 +13,24 @@ import { InformeShort, InformeLarge, Evento, ListadoEventos, niveles, estados, a
 import { ApiService } from '../api.service';
 import { all } from 'q';
 
+import { MatSnackBar } from '@angular/material';
+import { AlertsService } from 'angular-alert-module';
+
 ////
 const informeShort = new InformeShort([{_id: ''}], '', '', '', '');
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'evento-snack',
+  templateUrl: 'evento.snack.component.html',
+  styles: [`
+    .snack-informe {
+      color: hotwhite;
+      font: sans-serif bold 20px/30px;
+    }
+  `],
+})
+export class EventoSnackComponent {}
 
 @Component({
   selector: 'app-evento',
@@ -64,7 +80,9 @@ export class EventoComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private apiService: ApiService) {
+    private apiService: ApiService,
+    private alerts: AlertsService,
+    public snackBar: MatSnackBar) {
 ////
     this.informeShort['listadoEventos'] = new Array<ListadoEventos>();
     this.createForm();
@@ -141,6 +159,9 @@ export class EventoComponent implements OnInit {
           this.apiService.sendMail(this.arrayEventos, this.informeLarge['respevento'], this.informeLarge['turno'], this.informeLarge['fecha']).
           subscribe(respon => {
             console.log('correo enviado' + respon);
+            this.snackBar.openFromComponent(EventoSnackComponent, {
+              duration: 3000,
+            });
           });
         }, 1500);
       } else {
@@ -148,6 +169,13 @@ export class EventoComponent implements OnInit {
         this.apiService.sendMail(new Array, this.informe.respevento, this.informe.turno, this.informe.fecha).
         subscribe(respon => {
           console.log('##################no evetos');
+          // this.alerts.setDefaults('timeout', 2);
+          // this.alerts.setConfig('success  ', 'icon', 'save_alt');
+          // this.alerts.setMessage('Informe generado correctamente!', 'success');
+
+          this.snackBar.openFromComponent(EventoSnackComponent, {
+            duration: 3000,
+          });
         });
       }
     this.rebuildForm();

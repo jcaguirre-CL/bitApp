@@ -21,8 +21,9 @@ import { ApiService } from './api.service';
 import { SnackbarcustomComponent } from './snackbarcustom/snackbarcustom.component';
 import { InformeComponent } from './informe/informe.component';
 import { EventoComponent } from './evento/evento.component';
+import { EventoSnackComponent } from './evento/evento.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
-import { IncidenciaComponent } from './incidencia/incidencia.component';
+import { IncidenciaComponent, IncidenciaSnackComponent, IncidenciaNoCorreoSnackComponent } from './incidencia/incidencia.component';
 import { InicioComponent } from './inicio/inicio.component';
 
 import { MatRadioGroup } from '@angular/material';
@@ -37,7 +38,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 
 import { VideoPlayerModule } from './video-player/video-player.module';
-
+import { AlertsModule } from 'angular-alert-module';
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
@@ -51,8 +52,11 @@ export function tokenGetter() {
     EventoComponent,
     ConfiguracionComponent,
     IncidenciaComponent,
+    IncidenciaSnackComponent,
+    IncidenciaNoCorreoSnackComponent,
     InicioComponent,
-    LoginComponent
+    LoginComponent,
+    EventoSnackComponent
   ],
   imports: [
     BrowserModule,
@@ -78,8 +82,14 @@ export function tokenGetter() {
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       maxAge: 10
-    })
+    }),
+    AlertsModule.forRoot()
   ],
+  entryComponents: [EventoComponent,
+    EventoSnackComponent,
+    IncidenciaComponent,
+    IncidenciaSnackComponent,
+    IncidenciaNoCorreoSnackComponent],
   providers: [
     ApiService,
     HttpErrorHandler,

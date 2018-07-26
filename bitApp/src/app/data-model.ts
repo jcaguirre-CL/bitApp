@@ -205,7 +205,7 @@ export const turnos = [
     {value: 'PM', viewValue: 'PM'},
   ];
 
-export const areas = ['Sist. Emisión', 'PGM en Vivo', 'Contenido de Emisión', 'Plataformas de Contenido'];
+export const areas = ['Sist. Emisión', 'PGM en Vivo', 'Contenido de Emisión', 'Plataformas de Contenido', 'Proceso Productivo'];
 export const programas = ['13HD', 'Medios Digitales', 'REC', '13C', 'Prensa', 'Nuevos Negocios', 'MKT', 'Radios'];
 export const niveles = ['Información', 'Menor', 'Moderada', 'Grave', 'Crítica'];
 export const tipofallas = ['Humana', 'Aplicación', 'Hardware', 'Energía', 'Insumo'];

@@ -12,6 +12,34 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { DataSource } from '@angular/cdk/collections';
 
+import { MatSnackBar } from '@angular/material';
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'incidencia-snack',
+  templateUrl: 'incidencia.snack.component.html',
+  styles: [`
+    .snack-informe {
+      color: hotwhite;
+      font: sans-serif bold 20px/30px;
+    }
+  `],
+})
+export class IncidenciaSnackComponent {}
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'incidenciaNoCorreo-snack',
+  templateUrl: 'incidenciaNoCorreo.snack.component.html',
+  styles: [`
+    .snack-informe {
+      color: hotwhite;
+      font: sans-serif bold 20px/30px;
+    }
+  `],
+})
+export class IncidenciaNoCorreoSnackComponent {}
+
 @Component({
   selector: 'app-incidencia',
   templateUrl: './incidencia.component.html',
@@ -55,7 +83,7 @@ export class IncidenciaComponent implements OnInit {
   incidencias: Observable<Evento[]>;
   incidenciaForm: FormGroup;
 
-  constructor(private apiService: ApiService, private fb: FormBuilder) {  }
+  constructor(private apiService: ApiService, private fb: FormBuilder, public snackBar: MatSnackBar) {  }
 
   createForm() {
     this.incidenciaForm = this.fb.group({
@@ -89,11 +117,25 @@ export class IncidenciaComponent implements OnInit {
   onSubmit() {
     if (this.doEnviar) {
       console.log('enviar correo');
+      this.apiService.buildEvento(this.incidenciaForm.value).
+      subscribe(data => {
+        console.log('!!!!!crear incidencia: ' + JSON.stringify(data));
+        this.apiService.sendMail1Evento(data['_id'], data.respevento, data.fecha).
+        subscribe(respon => {
+          console.log('correo enviado' + respon);
+          this.snackBar.openFromComponent(IncidenciaSnackComponent, {
+            duration: 3000,
+          });
+        });
+      });
     } else {
       console.log('no enviar correo');
       this.apiService.buildEvento(this.incidenciaForm.value).
       subscribe(data => {
         console.log('!!!!!crear incidencia: ' + JSON.stringify(data));
+        this.snackBar.openFromComponent(IncidenciaNoCorreoSnackComponent, {
+          duration: 3000,
+        });
       });
     }
     this.incidenciaForm.reset();

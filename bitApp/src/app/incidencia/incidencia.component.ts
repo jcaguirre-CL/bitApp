@@ -85,6 +85,10 @@ export class IncidenciaComponent implements OnInit {
 
   constructor(private apiService: ApiService, private fb: FormBuilder, public snackBar: MatSnackBar) {  }
 
+  // highlight(element: Element) {
+  //   element.highlighted = !element.highlighted;
+  // }
+
   createForm() {
     this.incidenciaForm = this.fb.group({
       eventoId : '',

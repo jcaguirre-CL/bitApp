@@ -23,7 +23,8 @@ import { InformeComponent } from './informe/informe.component';
 import { EventoComponent } from './evento/evento.component';
 import { EventoSnackComponent } from './evento/evento.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
-import { IncidenciaComponent, IncidenciaSnackComponent, IncidenciaNoCorreoSnackComponent } from './incidencia/incidencia.component';
+// tslint:disable-next-line:max-line-length
+import { IncidenciaComponent, IncidenciaSnackComponent, IncidenciaNoCorreoSnackComponent, IncidenciaDialogComponent } from './incidencia/incidencia.component';
 import { InicioComponent } from './inicio/inicio.component';
 
 import { MatRadioGroup } from '@angular/material';
@@ -54,6 +55,7 @@ export function tokenGetter() {
     IncidenciaComponent,
     IncidenciaSnackComponent,
     IncidenciaNoCorreoSnackComponent,
+    IncidenciaDialogComponent,
     InicioComponent,
     LoginComponent,
     EventoSnackComponent
@@ -89,7 +91,8 @@ export function tokenGetter() {
     EventoSnackComponent,
     IncidenciaComponent,
     IncidenciaSnackComponent,
-    IncidenciaNoCorreoSnackComponent],
+    IncidenciaNoCorreoSnackComponent,
+    IncidenciaDialogComponent],
   providers: [
     ApiService,
     HttpErrorHandler,

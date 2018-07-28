@@ -1,3 +1,8 @@
+export interface Evento {
+  highlighted?: boolean;
+  hovered?: boolean;
+}
+
 export class Evento {
     eventoId = '';
     informeId = '';

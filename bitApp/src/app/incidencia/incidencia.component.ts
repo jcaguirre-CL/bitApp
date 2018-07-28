@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 import { ApiService } from '../api.service';
@@ -12,7 +12,12 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { DataSource } from '@angular/cdk/collections';
 
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -39,6 +44,52 @@ export class IncidenciaSnackComponent {}
   `],
 })
 export class IncidenciaNoCorreoSnackComponent {}
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'incidencia-dialog',
+  templateUrl: 'incidencia.dialog.component.html',
+})
+export class IncidenciaDialogComponent implements OnInit {
+
+  incidenciaDialogForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<IncidenciaDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Evento) {}
+    // @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  ngOnInit() {
+    this.createForm();
+  }
+  createForm() {
+    this.incidenciaDialogForm = this.fb.group({
+      eventoId : '',
+      informeId : '',
+      respevento : '',
+      fecha : '',
+      hora : '',
+      informante : '',
+      area : '',
+      programa : '',
+      nivel : '',
+      plataforma : {nombre: '', itemfalla: ''},
+      tipofalla : '',
+      descripcion : '',
+      solucion : '',
+      respoperacion : '',
+      estado : '',
+      fechares : '',
+      atencion : '',
+      impacto : ''
+    });
+  }
+
+}
 
 @Component({
   selector: 'app-incidencia',
@@ -83,9 +134,29 @@ export class IncidenciaComponent implements OnInit {
   incidencias: Observable<Evento[]>;
   incidenciaForm: FormGroup;
 
-  constructor(private apiService: ApiService, private fb: FormBuilder, public snackBar: MatSnackBar) {  }
+  animal: string;
+  name: string;
 
-  // highlight(element: Element) {
+  constructor(private apiService: ApiService,
+    private fb: FormBuilder,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog
+  ) {  }
+
+  openDialog(row): void {
+    const dialogRef = this.dialog.open(IncidenciaDialogComponent, {
+      width: '800px',
+      data: row
+      // data: {name: row.respevento, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+
+  // highlight(element: Evento) {
   //   element.highlighted = !element.highlighted;
   // }
 
@@ -156,6 +227,11 @@ export class IncidenciaComponent implements OnInit {
     this.createForm();
     this.getIncidencias();
   }
+
+filaSeleccionada(row: any) {
+  console.log(row);
+  this.openDialog(row);
+}
 
 }
 

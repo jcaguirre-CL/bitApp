@@ -13,44 +13,49 @@
       <mat-list class="app-class">
         <mat-list-item>
           <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="{{ data.fecha | date }}" formControlName="fecha">
+            <input matInput [matDatepicker]="picker" placeholder="Fecha: " formControlName="fecha" required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>              
+          <mat-error *ngIf="!incidenciaDialogForm.get('fecha').valid && incidenciaDialogForm.get('fecha').touched">Debes seleccionar una Fecha</mat-error>
         </mat-list-item>
         <mat-list-item>
           <mat-form-field>
-              <mat-select placeholder="{{ data.respevento }}" formControlName="respevento">
-                <mat-option *ngFor="let responsable of responsables" [value]="responsable.nombre">
-                  {{ responsable.nombre }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>             
+            <!-- {{ data.respevento }} -->
+            <mat-select placeholder="Responsable: " formControlName="respevento" required>
+              <mat-option *ngFor="let responsable of responsables" [value]="responsable.nombre">
+                {{ responsable.nombre }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>          
+          <mat-error *ngIf="!incidenciaDialogForm.get('respevento').valid && incidenciaDialogForm.get('respevento').touched">Debes seleccionar un Responsable</mat-error>
         </mat-list-item>
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
           <div fxFlex="33%">
             <mat-list-item>
               <mat-form-field>
-                <input matInput placeholder="{{ data.hora }}" formControlName="hora">
+                <input matInput placeholder="Hora: " formControlName="hora" required>
+              </mat-form-field>
+              <mat-error *ngIf="!incidenciaDialogForm.get('hora').valid && incidenciaDialogForm.get('hora').touched">Debes indicar una hora</mat-error>
+            </mat-list-item>
+          </div>
+          <div fxFlex="33%">
+            <mat-list-item>
+              <mat-form-field>
+                <input matInput placeholder="Informante:" formControlName="informante">
               </mat-form-field>
             </mat-list-item>
           </div>
           <div fxFlex="33%">
             <mat-list-item>
               <mat-form-field>
-                <input matInput placeholder="{{ data.informante }}" formControlName="informante">
-              </mat-form-field>
-            </mat-list-item>
-          </div>
-          <div fxFlex="33%">
-            <mat-list-item>
-              <mat-form-field>
-                <mat-select placeholder="{{ data.nivel }}" formControlName="nivel">
+                <mat-select placeholder="Nivel:" formControlName="nivel" required>
                   <mat-option *ngFor="let nivel of niveles" [value]="nivel">
                     {{ nivel }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+              <mat-error *ngIf="!incidenciaDialogForm.get('nivel').valid && incidenciaDialogForm.get('nivel').touched">Debes seleccionar el Nivel</mat-error>
             </mat-list-item>
           </div>
         </div>
@@ -59,34 +64,54 @@
           <div fxFlex="33%">          
             <mat-list-item>
               <mat-form-field>
-                <mat-select placeholder="{{ data.area }}" formControlName="area">
+                <mat-select placeholder="Area:" formControlName="area" required>
                   <mat-option *ngFor="let area of areas" [value]="area">
                     {{ area }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>    
+              <mat-error *ngIf="!incidenciaDialogForm.get('area').valid && incidenciaDialogForm.get('area').touched">Debes seleccionar el Area</mat-error>              
             </mat-list-item>
           </div>
           <div fxFlex="33%">          
             <mat-list-item>
               <mat-form-field>
-                <mat-select placeholder="{{ data.programa }}" formControlName="programa">
+                <mat-select placeholder="Programa:" formControlName="programa" required>
                   <mat-option *ngFor="let programa of programas" [value]="programa">
                     {{ programa }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>    
+              <mat-error *ngIf="!incidenciaDialogForm.get('programa').valid && incidenciaDialogForm.get('programa').touched">Debes seleccionar el Programa</mat-error>
             </mat-list-item>
           </div>
           <div fxFlex="33%">          
             <mat-list-item>
               <mat-form-field>
-                <mat-select placeholder="{{ data.tipofalla }}" formControlName="tipofalla">
+                <mat-select placeholder="Falla:" formControlName="tipofalla" required>
                   <mat-option *ngFor="let tipofalla of tipofallas" [value]="tipofalla">
                     {{ tipofalla }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>    
+              <mat-error *ngIf="!incidenciaDialogForm.get('tipofalla').valid && incidenciaDialogForm.get('tipofalla').touched">Debes seleccionar el Tipo de Falla</mat-error>
+            </mat-list-item>
+          </div>
+        </div>
+
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+          <div fxFlex="50%">     
+            <mat-list-item>
+              <mat-form-field>
+                <input matInput placeholder="Plataforma: " formControlName="plataformaNombre">
+              </mat-form-field>
+            </mat-list-item>
+          </div>
+          <div fxFlex="50%">     
+            <mat-list-item>
+              <mat-form-field>
+                <input matInput placeholder="Item Falla: " formControlName="plataformaItemFalla">
+              </mat-form-field>
             </mat-list-item>
           </div>
         </div>
@@ -426,63 +451,76 @@
 
         <mat-list-item>
           <mat-form-field class="example-form">
-            <textarea matInput placeholder="{{ data.descripcion }}" formControlName="descripcion"></textarea>
+            <textarea matInput placeholder="Descripcion:" formControlName="descripcion"></textarea>
           </mat-form-field>
         </mat-list-item>
         <mat-list-item>
           <mat-form-field class="example-form">
-            <textarea matInput placeholder="{{ data.solucion }}" formControlName="solucion"></textarea>
+            <textarea matInput placeholder="Solucion:" formControlName="solucion"></textarea>
           </mat-form-field>
         </mat-list-item>
-
-        <!-- <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
-          <div fxFlex="50%">
-            <mat-list-item>
-              <label class="center-block">Estado: (*)
-                <mat-radio-group class="example-radio-group" formControlName="estado">
-                  <mat-radio-button class="example-radio-button" *ngFor="let estado of estados" [value]="estado" align="left">
-                    {{estado}}
-                  </mat-radio-button>
-                </mat-radio-group>
-              </label>
-            </mat-list-item>
-          </div>
-          <div fxFlex="50%">
-            <mat-list-item>
-              <label class="center-block">Atención: (*)
-                <mat-radio-group class="example-radio-group" formControlName="atencion">
-                  <mat-radio-button class="example-radio-button" *ngFor="let atencion of atenciones" [value]="atencion" align="left">
-                    {{atencion}}
-                  </mat-radio-button>
-                </mat-radio-group>
-              </label>
-            </mat-list-item>
-          </div>
-        </div> -->
 
         <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
           <div fxFlex="50%">
             <mat-list-item>
-              <mat-form-field>
-                <input matInput placeholder="{{ data.respoperacion }}" formControlName="respoperacion">
-              </mat-form-field>
+              <label class="center-block">Estado: *
+                <mat-radio-group class="example-radio-group" formControlName="estado" [value]="data.estado" required>
+                  <mat-radio-button class="example-radio-button" *ngFor="let estado of estados" [value]="estado" align="left">
+                    {{estado}}
+                  </mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="!incidenciaDialogForm.get('estado').valid && incidenciaDialogForm.get('estado').touched">Debes seleccionar el estado</mat-error>
+              </label>
             </mat-list-item>
           </div>
           <div fxFlex="50%">
             <mat-list-item>
+              <label class="center-block">Atención: *
+                <mat-radio-group class="example-radio-group" formControlName="atencion" required>
+                  <mat-radio-button class="example-radio-button" *ngFor="let atencion of atenciones" [value]="atencion" align="left">
+                    {{atencion}}
+                  </mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="!incidenciaDialogForm.get('atencion').valid && incidenciaDialogForm.get('atencion').touched">Debes seleccionar la atencion</mat-error>
+              </label>
+            </mat-list-item>
+          </div>
+        </div>
+
+        <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+          <div fxFlex="33%">
+            <mat-list-item>
               <mat-form-field>
-                <input matInput [matDatepicker]="picker2" placeholder="{{ data.fechares }}" formControlName="fechares">
+                <input matInput placeholder="Responsable:" formControlName="respoperacion">
+              </mat-form-field>
+            </mat-list-item>
+          </div>
+          <div fxFlex="33%">
+            <mat-list-item>
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker2" placeholder="Fecha Resolucion:" formControlName="fechares">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>              
             </mat-list-item>
           </div>
-          
+          <div fxFlex="33%">
+            <mat-list-item>
+              <mat-form-field>
+                <mat-select placeholder="Impacto:" formControlName="impacto">
+                  <mat-option *ngFor="let impacto of impactos" [value]="impacto">
+                    {{ impacto }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>             
+            </mat-list-item>
+          </div>
         </div>
       </mat-list>
       <mat-divider></mat-divider>
       <mat-card-actions align="center">
-        <button mat-button (click)="onNoClick()">Continuar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!incidenciaDialogForm.valid">Modificar</button>
+        <button mat-raised-button color="primary" (click)="onNoClick()">Cancelar</button>
         <!-- <mat-checkbox color="primary" class="alinear-left" [(ngModel)]="doEnviar" [ngModelOptions]="{standalone: true}">Enviar por correo</mat-checkbox> -->
         <!-- <button mat-raised-button color="primary" type="submit">Guardar</button> -->
         <!-- <button mat-raised-button color="primary" (click)="guardarEvento()" type="submit">Guardar</button> -->

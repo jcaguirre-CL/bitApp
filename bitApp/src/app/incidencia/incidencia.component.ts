@@ -1,12 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { ApiService } from '../api.service';
-import { InformeShort, InformeLarge, Evento, ListadoEventos, niveles, estados, areas, programas,
+import { InformeShort, InformeLarge, Responsable, Evento, ListadoEventos, niveles, estados, areas, programas,
   tipofallas, atenciones, mamfallas, pamfallas, edicionfallas, postaudiofallas, conectividadfallas,
  datacenterfallas, operacionfallas, transcodificacionfallas, codificacionfallas, estudios13fallas, ingestafallas,
  emisionautofallas, inewsfallas, recepcioncontefallas, transmisionfallas, libreriamusicalfallas,
- otrasfallas, graficafallas, electricidadfallas, responsables} from '../data-model';
+ otrasfallas, graficafallas, electricidadfallas, responsables, impactos} from '../data-model';
 
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -49,18 +49,58 @@ export class IncidenciaNoCorreoSnackComponent {}
   // tslint:disable-next-line:component-selector
   selector: 'incidencia-dialog',
   templateUrl: 'incidencia.dialog.component.html',
+  styleUrls: ['./incidencia.dialog.component.css']
 })
 export class IncidenciaDialogComponent implements OnInit {
+
+  responsable: Responsable = {
+      responsableId: '',
+      nombre: '',
+      correo: '',
+      cargo: ''
+    };
+
+  mamfallas = mamfallas;
+  pamfallas = pamfallas;
+  edicionfallas = edicionfallas;
+  postaudiofallas = postaudiofallas;
+  conectividadfallas = conectividadfallas;
+  datacenterfallas = datacenterfallas;
+  operacionfallas = operacionfallas;
+  graficafallas = graficafallas;
+  transcodificacionfallas = transcodificacionfallas;
+  codificacionfallas = codificacionfallas;
+  estudios13fallas = estudios13fallas;
+  ingestafallas = ingestafallas;
+  emisionautofallas = emisionautofallas;
+  inewsfallas = inewsfallas;
+  transmisionfallas = transmisionfallas;
+  recepcioncontefallas = recepcioncontefallas;
+  libreriamusicalfallas = libreriamusicalfallas;
+  electricidadfallas = electricidadfallas;
+  otrasfallas = otrasfallas;
+
+  responsables = responsables;
+  estados = estados;
+  areas = areas;
+  niveles = niveles;
+  programas = programas;
+  tipofallas = tipofallas;
+  atenciones = atenciones;
+  impactos = impactos;
 
   incidenciaDialogForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<IncidenciaDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Evento) {}
+    @Inject(MAT_DIALOG_DATA) public data: Evento) {
+      this.responsable.nombre = data.respevento;
+    }
     // @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   onNoClick(): void {
+    this.incidenciaDialogForm.reset();
     this.dialogRef.close();
   }
   ngOnInit() {
@@ -70,23 +110,32 @@ export class IncidenciaDialogComponent implements OnInit {
     this.incidenciaDialogForm = this.fb.group({
       eventoId : '',
       informeId : '',
-      respevento : '',
-      fecha : '',
-      hora : '',
-      informante : '',
-      area : '',
-      programa : '',
-      nivel : '',
-      plataforma : {nombre: '', itemfalla: ''},
-      tipofalla : '',
-      descripcion : '',
-      solucion : '',
-      respoperacion : '',
-      estado : '',
-      fechares : '',
-      atencion : '',
-      impacto : ''
+      respevento : [this.data.respevento, Validators.required],
+      fecha : [this.data.fecha, Validators.required],
+      hora : [this.data.hora, Validators.required],
+      informante : [this.data.informante],
+      area : [this.data.area, Validators.required],
+      programa : [this.data.programa, Validators.required],
+      nivel : [this.data.nivel, Validators.required],
+      // plataforma : {nombre: [{value: this.data.plataforma.nombre, disabled: true}, Validators.required], itemfalla: ''},
+      plataformaNombre : [{value: this.data.plataforma.nombre, disabled: true}, Validators.required],
+      plataformaItemFalla : [{value: this.data.plataforma.itemfalla, disabled: true}, Validators.required],
+      tipofalla : [this.data.tipofalla, Validators.required],
+      descripcion : [this.data.descripcion],
+      solucion : [this.data.solucion],
+      respoperacion : [this.data.respoperacion],
+      estado : [this.data.estado, Validators.required],
+      fechares : [this.data.fechares],
+      atencion : [this.data.atencion, Validators.required],
+      impacto : [this.data.impacto]
     });
+  }
+
+
+
+  onSubmit() {
+    this.incidenciaDialogForm.reset();
+    this.dialogRef.close();
   }
 
 }
@@ -164,21 +213,21 @@ export class IncidenciaComponent implements OnInit {
     this.incidenciaForm = this.fb.group({
       eventoId : '',
       informeId : '',
-      respevento : '',
-      fecha : '',
-      hora : '',
+      respevento : [null, Validators.required],
+      fecha : [null, Validators.required],
+      hora : [null, Validators.required],
       informante : '',
-      area : '',
-      programa : '',
-      nivel : '',
+      area : [null, Validators.required],
+      programa : [null, Validators.required],
+      nivel : [null, Validators.required],
       plataforma : {nombre: '', itemfalla: ''},
-      tipofalla : '',
+      tipofalla : [null, Validators.required],
       descripcion : '',
       solucion : '',
       respoperacion : '',
-      estado : '',
+      estado : [null, Validators.required],
       fechares : '',
-      atencion : '',
+      atencion : [null, Validators.required],
       impacto : ''
     });
   }

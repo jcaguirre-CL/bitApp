@@ -216,6 +216,7 @@ export const niveles = ['Información', 'Menor', 'Moderada', 'Grave', 'Crítica'
 export const tipofallas = ['Humana', 'Aplicación', 'Hardware', 'Energía', 'Insumo'];
 export const estados = ['Resuelto', 'Pendiente', 'Activo'];
 export const atenciones = ['Canal13', 'Secuoya'];
+export const impactos = ['Alto', 'Bajo'];
 
 export const mamfallas = [
     {nombre: 'MAM', itemfalla: 'Tx Cinta'},

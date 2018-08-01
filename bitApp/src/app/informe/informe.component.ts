@@ -76,10 +76,10 @@ export class InformeComponent implements OnInit {
 
   filaSeleccionada(row) {
     this.informeShort = row;
-    this.apiService.getEventos(this.informeShort['listadoEventos'])
-    .subscribe(val => {
-      console.log('arreglo de eventos' + val);
-    });
+    // this.apiService.getEventos(this.informeShort['listadoEventos'])
+    // .subscribe(val => {
+    //   console.log('arreglo de eventos' + val);
+    // });
     console.log('Row clicked: ', this.informeShort);
   }
 

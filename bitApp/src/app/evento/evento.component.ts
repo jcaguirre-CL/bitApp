@@ -200,7 +200,8 @@ export class EventoComponent implements OnInit {
 
     try {
       this.eventoForm.value['listadoEventos'].forEach(item => {
-        item.responsableEvento = this.informeLocal.respevento;
+        // item.responsableEvento = this.informeLocal.respevento;  ERROR
+        item.respevento = this.informeLocal.respevento;
         item.fecha = this.informeLocal.fecha;
         ////
         item.turno = this.informeLocal.turno;

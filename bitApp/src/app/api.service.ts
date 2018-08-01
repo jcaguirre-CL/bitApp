@@ -35,6 +35,26 @@ export class ApiService {
   // Informe: FormInforme;
   arrayEventos: Array<String>[] = [];
   modificarEventoInformeId: ModificarEventoInformeId = {eventoId: '', informeId: ''};
+  evento: Evento = {
+    eventoId: '',
+    informeId: '',
+    respevento: '',
+    fecha: '',
+    hora: '',
+    informante: '',
+    area: '',
+    programa: '',
+    nivel: '',
+    plataforma: {nombre: '', itemfalla: ''},
+    tipofalla: '',
+    descripcion: '',
+    solucion: '',
+    respoperacion: '',
+    estado: '',
+    fechares: '',
+    atencion: '',
+    impacto: '',
+  };
 
 
   constructor(
@@ -62,9 +82,19 @@ export class ApiService {
   // tslint:disable-next-line:no-shadowed-variable
   modifyEvento (modificarEventoInformeId: ModificarEventoInformeId): Observable<ModificarEventoInformeId> {
     // tslint:disable-next-line:max-line-length
-    console.log('xxx: ' + JSON.stringify(modificarEventoInformeId));
+    console.log('xxxApi: ' + JSON.stringify(modificarEventoInformeId));
     // tslint:disable-next-line:max-line-length
     return this.http.put<ModificarEventoInformeId>(this._URL + 'Evento/' + modificarEventoInformeId['eventoId'], modificarEventoInformeId, httpOptions)
+      .pipe(
+        catchError(this.handleError('crearInforme error: ', ))
+      );
+  }
+
+  modificarEvento (evento: Evento): Observable<any> {
+    // tslint:disable-next-line:max-line-length
+    console.log('xxxApi: ' + JSON.stringify(evento));
+    // tslint:disable-next-line:max-line-length
+    return this.http.put<Evento>(this._URL + 'Evento/', evento, httpOptions)
       .pipe(
         catchError(this.handleError('crearInforme error: ', ))
       );

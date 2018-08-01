@@ -93,6 +93,7 @@ export class IncidenciaDialogComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private apiService: ApiService,
     public dialogRef: MatDialogRef<IncidenciaDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Evento) {
       this.responsable.nombre = data.respevento;
@@ -108,8 +109,8 @@ export class IncidenciaDialogComponent implements OnInit {
   }
   createForm() {
     this.incidenciaDialogForm = this.fb.group({
-      eventoId : '',
-      informeId : '',
+      eventoId : this.data.eventoId,
+      informeId : this.data.informeId,
       respevento : [this.data.respevento, Validators.required],
       fecha : [this.data.fecha, Validators.required],
       hora : [this.data.hora, Validators.required],
@@ -134,8 +135,13 @@ export class IncidenciaDialogComponent implements OnInit {
 
 
   onSubmit() {
-    this.incidenciaDialogForm.reset();
-    this.dialogRef.close();
+    console.log('Submit' + JSON.stringify(this.incidenciaDialogForm.value));
+    this.apiService.modificarEvento(this.incidenciaDialogForm.value)
+    .subscribe(evento => {
+      console.log('Evento modificado: ' + JSON.stringify(evento));
+      this.incidenciaDialogForm.reset();
+      this.dialogRef.close();
+    });
   }
 
 }
@@ -236,6 +242,8 @@ export class IncidenciaComponent implements OnInit {
     this.isLoading = true;
     this.incidencias = this.apiService.getIncidencias()
                         .pipe(finalize(() => this.isLoading = false));
+    // this.dataSource.addData = this.incidencias;
+    console.log(this.incidencias);
   }
 
   onSubmit() {
@@ -250,6 +258,9 @@ export class IncidenciaComponent implements OnInit {
           this.snackBar.openFromComponent(IncidenciaSnackComponent, {
             duration: 3000,
           });
+          this.incidenciaForm.reset();
+          this.createForm();
+          // this.getIncidencias();
         });
       });
     } else {
@@ -260,9 +271,11 @@ export class IncidenciaComponent implements OnInit {
         this.snackBar.openFromComponent(IncidenciaNoCorreoSnackComponent, {
           duration: 3000,
         });
+        this.incidenciaForm.reset();
+        this.createForm();
+        // this.getIncidencias();
       });
     }
-    this.incidenciaForm.reset();
           // console.log('!!!!!crear informe: ' + informe['_id']);
       // for (let i = 0, len = this.arrayEventos.length; i < len; i++) {
       //   this.apiService.modifyEvento({'eventoId': String(this.arrayEventos[i]), 'informeId': String(informe['_id'])})
@@ -287,6 +300,10 @@ filaSeleccionada(row: any) {
 export class RegistroDataSource extends DataSource<any> {
   constructor(private apiService: ApiService) {
     super();
+  }
+
+  addData() {
+    return this.apiService.getIncidencias();
   }
   connect(): Observable<Evento[]> {
     return this.apiService.getIncidencias();
